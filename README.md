@@ -1,1 +1,1 @@
-# -ng-d-ng-luy-n-thi-l-thuy-t-GPLX
+# Ứng dụng luyện thi lý thuyết GPLX
