@@ -13,14 +13,14 @@ Người dùng có nhu cầu luyện thi lý thuyết GPLX.
   - Hạng A2: mô tô 2 bánh dung tích xilanh trên 175 cm3
   - Hạng A3: mô tô ba bánh, xe lam, xích lô máy
   - Hạng A4: máy kéo có trọng tải đến 1.000kg
--	Ô tô:
-  -	Hạng B1: ô tô chở người đến 9 chỗ ngồi, ô tô trọng tải dưới 3.500kg.
-  -	Hạng B2: tương tự bằng B1, dành cho người lái xe số sàn
--	Xe cỡ lớn:
-  -	Hạng C: ô tô tải, đầu kéo rơ mooc trọng tải từ 3.500kg trở lên
-  -	Hạng D: ô tô chở người từ 10 – 30 chỗ
-  -	Hạng E: ô tô chở người trên 30 chỗ
-  -	Hạng F: dùng cho các loại xe ô tô trở lên và xe kéo rơ mooc trọng tải lớn.
+- Ô tô:
+   - Hạng B1: ô tô chở người đến 9 chỗ ngồi, ô tô trọng tải dưới 3.500kg.
+   - Hạng B2: tương tự bằng B1, dành cho người lái xe số sàn
+- Xe cỡ lớn:
+  - Hạng C: ô tô tải, đầu kéo rơ mooc trọng tải từ 3.500kg trở lên
+   -	Hạng D: ô tô chở người từ 10 – 30 chỗ
+   -	Hạng E: ô tô chở người trên 30 chỗ
+   -	Hạng F: dùng cho các loại xe ô tô trở lên và xe kéo rơ mooc trọng tải lớn.
 ### Ôn tập tất cả câu hỏi theo hạng
 ### Ôn tập theo chủ đề:
 - Câu hỏi điểm liệt
