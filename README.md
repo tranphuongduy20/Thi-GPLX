@@ -44,4 +44,4 @@ Hướng dẫn chạy sa hình
 - [@expo/webpack-config for UI Kittens](https://github.com/akveo/react-native-ui-kitten/issues/996)
 - [UI Kittens](https://akveo.github.io/react-native-ui-kitten/docs/guides/getting-started#getting-started)
 - [expo-splash-screen](https://docs.expo.io/versions/latest/sdk/splash-screen/)
-- [@react-navigation/bottom-tabs_material-top-tabs](https://reactnavigation.org/)
+- [@react-navigation/bottom-tabs_material-top-tabs_stack](https://reactnavigation.org/)
