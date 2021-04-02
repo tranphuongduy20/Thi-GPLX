@@ -41,5 +41,5 @@ Hướng dẫn chạy sa hình
 ### Mẹo thi lý thuyết
 ## Thư viện sử dụng
 - Expo
-- webpack-config
+- @expo/webpack-config
 - UI Kittens
