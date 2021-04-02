@@ -40,6 +40,6 @@ Tất cả các biển báo về giao thông đường bộ
 Hướng dẫn chạy sa hình
 ### Mẹo thi lý thuyết
 ## Thư viện sử dụng
-- Expo
-- @expo/webpack-config
-- UI Kittens
+- [Expo](https://github.com/expo/expo)
+- [@expo/webpack-config for UI Kittens](https://github.com/akveo/react-native-ui-kitten/issues/996)
+- [UI Kittens](https://akveo.github.io/react-native-ui-kitten/docs/guides/getting-started#getting-started)
