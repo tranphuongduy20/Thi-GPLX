@@ -45,3 +45,5 @@ Hướng dẫn chạy sa hình
 - [UI Kittens](https://akveo.github.io/react-native-ui-kitten/docs/guides/getting-started#getting-started)
 - [expo-splash-screen](https://docs.expo.io/versions/latest/sdk/splash-screen/)
 - [@react-navigation/bottom-tabs_material-top-tabs_stack](https://reactnavigation.org/)
+- [react-native-web-swiper](https://github.com/reactrondev/react-native-web-swiper)
+- [react-native-progress](https://github.com/react-native-progress-view/progress-bar-android)
