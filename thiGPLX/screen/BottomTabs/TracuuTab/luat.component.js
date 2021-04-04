@@ -9,7 +9,7 @@ import {
 } from "@ui-kitten/components";
 import * as EvaIcon from "../../../src/icon/EvaIcon";
 
-export const SahinhScreen = ({ navigation }) => {
+export const LuatScreen = ({ navigation }) => {
   const BackAction = () => (
     <TopNavigationAction
       icon={EvaIcon.BackIcon}
@@ -20,7 +20,7 @@ export const SahinhScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Sa hình"
+        title="Mẹo thi"
         alignment="center"
         accessoryLeft={BackAction}
       />
@@ -28,7 +28,9 @@ export const SahinhScreen = ({ navigation }) => {
       <Layout
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
-        <Text category="h1">Sa hình Sa hình</Text>
+        <Text category="h1">
+          Uống gượu bia là hông dc phép lái xe máy nha m
+        </Text>
       </Layout>
     </SafeAreaView>
   );
