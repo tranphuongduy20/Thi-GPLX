@@ -20,8 +20,8 @@ export const LuatScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title="Mẹo thi"
-        alignment="center"
+        title="Xử phạt"
+        alignment="left"
         accessoryLeft={BackAction}
       />
       <Divider />

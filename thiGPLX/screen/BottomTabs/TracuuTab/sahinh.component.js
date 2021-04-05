@@ -21,7 +21,7 @@ export const SahinhScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
         title="Sa hình"
-        alignment="center"
+        alignment="left"
         accessoryLeft={BackAction}
       />
       <Divider />

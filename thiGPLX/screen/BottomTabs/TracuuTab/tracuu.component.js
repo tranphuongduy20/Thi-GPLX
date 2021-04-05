@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, TouchableOpacity } from "react-native";
 import {
   Layout,
   Text,

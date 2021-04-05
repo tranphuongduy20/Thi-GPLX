@@ -16,3 +16,5 @@ export const SearchIcon = (props) => <Icon name="search-outline" {...props} />;
 export const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
 export const BookIcon = (props) => <Icon name="book" {...props} />;
+
+export const ListIcon = (props) => <Icon name="list" {...props} />;

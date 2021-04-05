@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  ButtonStyle: {
+  ButtonTrangchuStyle: {
     width: "94%",
     flexDirection: "row",
     alignItems: "center",
@@ -25,5 +25,26 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     margin: 5,
     marginBottom: "1%",
+  },
+  ButtonBanglaiStyle: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
+    borderBottomWidth: 1,
+    borderColor: "#ccccff",
+    height: 72,
+  },
+  ButtonBanglaiPressedStyle: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
+    borderWidth: 2,
+    borderColor: "#ff1a1a",
+    height: 72,
+  },
+  CauhoiStyle: {
+    flex: 1,
   },
 });
