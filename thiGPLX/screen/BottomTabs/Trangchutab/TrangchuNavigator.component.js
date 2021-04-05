@@ -6,9 +6,13 @@ import { OntapScreen } from "./ontap.component";
 const { Navigator, Screen } = createStackNavigator();
 
 export const TrangchuNavigator = () => (
-  <Navigator headerMode="none">
-    <Screen name="TrangchuScreen" component={TrangchuScreen} />
-    <Screen name="BanglaiScreen" component={BanglaiScreen} />
-    <Screen name="OntapScreen" component={OntapScreen} />
+  <Navigator>
+    <Screen
+      name="Trang chủ"
+      component={TrangchuScreen}
+      options={{ headerShown: false }}
+    />
+    <Screen name="Chọn loại GPLX" component={BanglaiScreen} />
+    <Screen name="Câu hỏi ôn tập" component={OntapScreen} />
   </Navigator>
 );

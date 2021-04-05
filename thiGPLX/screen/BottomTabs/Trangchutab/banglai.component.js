@@ -12,21 +12,9 @@ import { styles } from "../../../style/styles";
 
 export const BanglaiScreen = ({ navigation }) => {
   const [currentBanglai, setBanglai] = useState("A1");
-  const BackAction = () => (
-    <TopNavigationAction
-      icon={EvaIcon.BackIcon}
-      onPress={() => navigation.goBack()}
-    />
-  );
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <TopNavigation
-        title="Chọn loại GPLX"
-        alignment="left"
-        accessoryLeft={BackAction}
-      />
-      <Divider />
       <Layout style={{ flex: 1, alignItems: "center" }}>
         <Text category="h5" style={{ marginTop: "1%" }}>
           Mô tô

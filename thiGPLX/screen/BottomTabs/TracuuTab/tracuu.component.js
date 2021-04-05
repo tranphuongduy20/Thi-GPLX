@@ -24,21 +24,21 @@ export const TracuuScreen = ({ navigation }) => {
         <ButtonGroup size="giant" appearance="outline" style={{ width: "90%" }}>
           <Button
             accessoryLeft={EvaIcon.CarIcon}
-            onPress={() => navigateScreen("SahinhScreen")}
+            onPress={() => navigateScreen("Sa hình")}
             style={{ width: "33.3%" }}
           >
             Sa hình
           </Button>
           <Button
             accessoryLeft={EvaIcon.SignIcon}
-            onPress={() => navigateScreen("BienbaoScreen")}
+            onPress={() => navigateScreen("Biển báo")}
             style={{ width: "33.3%" }}
           >
             Biển báo
           </Button>
           <Button
             accessoryLeft={EvaIcon.BookIcon}
-            onPress={() => navigateScreen("LuatScreen")}
+            onPress={() => navigateScreen("Pháp luật")}
             style={{ width: "33.3%" }}
           >
             Pháp luật

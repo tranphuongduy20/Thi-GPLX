@@ -53,27 +53,11 @@ export const OntapScreen = ({ navigation }) => {
       </Text>
     </Card>
   );
-  const BackAction = () => (
-    <TopNavigationAction
-      icon={EvaIcon.BackIcon}
-      onPress={() => navigation.goBack()}
-    />
-  );
-
-  const getHeader = () => (
-    <TopNavigation
-      title="Câu hỏi ôn tập"
-      alignment="left"
-      accessoryLeft={BackAction}
-    />
-  );
-
   return (
     <FlatList
       data={data}
       renderItem={renderItem}
       keyExtractor={(item) => item.title}
-      ListHeaderComponent={getHeader}
     />
   );
 };

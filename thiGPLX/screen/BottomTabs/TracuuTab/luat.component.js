@@ -10,21 +10,8 @@ import {
 import * as EvaIcon from "../../../src/icon/EvaIcon";
 
 export const LuatScreen = ({ navigation }) => {
-  const BackAction = () => (
-    <TopNavigationAction
-      icon={EvaIcon.BackIcon}
-      onPress={() => navigation.goBack()}
-    />
-  );
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation
-        title="Xử phạt"
-        alignment="left"
-        accessoryLeft={BackAction}
-      />
-      <Divider />
       <Layout
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >

@@ -23,7 +23,7 @@ export const TrangchuScreen = ({ navigation }) => {
   const renderRightActions = () => (
     <TopNavigationAction
       icon={EvaIcon.ListIcon}
-      onPress={() => navigateScreen("BanglaiScreen")}
+      onPress={() => navigateScreen("Chọn loại GPLX")}
     />
   );
   return (
@@ -36,7 +36,7 @@ export const TrangchuScreen = ({ navigation }) => {
       <Divider />
       <Layout style={{ flex: 1, alignItems: "center" }}>
         <TouchableOpacity
-          onPress={() => navigateScreen("OntapScreen")}
+          onPress={() => navigateScreen("Câu hỏi ôn tập")}
           style={styles.ButtonTrangchuStyle}
           activeOpacity={0.5}
         >
