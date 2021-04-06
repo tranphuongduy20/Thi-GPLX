@@ -24,7 +24,6 @@ const data = new Array(8).fill({
 });
 
 export const OntapScreen = ({ navigation }) => {
-  const [currentChude, setcurrentChude] = useState(0);
   const renderItemHeader = (headerProps, info) => (
     <SafeAreaView {...headerProps}>
       <Text category="h6">

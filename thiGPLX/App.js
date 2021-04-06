@@ -1,14 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Entypo } from '@expo/vector-icons';
-import * as SplashScreen from 'expo-splash-screen';
-import * as Font from 'expo-font';
-import { SafeAreaView,StatusBar } from 'react-native';
+import React, { useCallback, useEffect, useState } from "react";
+import { Entypo } from "@expo/vector-icons";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+import { SafeAreaView, StatusBar } from "react-native";
 
-import * as eva from '@eva-design/eva';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import * as eva from "@eva-design/eva";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
-import { ApplicationProvider, IconRegistry} from '@ui-kitten/components';
-import {AppNavigator} from './screen/AppNavigator'
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { AppNavigator } from "./screen/AppNavigator";
+
+import { default as theme } from "./src/assets/custom-theme.json";
+
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -22,7 +27,7 @@ export default function App() {
         await Font.loadAsync(Entypo.font);
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -47,15 +52,19 @@ export default function App() {
 
   if (!appIsReady) {
     return null;
-    
   }
 
   return (
-    <SafeAreaView style={{flex: 1,marginTop:StatusBar.currentHeight}} onLayout={onLayoutRootView}>
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={eva.light}>
-        <AppNavigator/>
-      </ApplicationProvider>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView
+        style={{ flex: 1, marginTop: StatusBar.currentHeight }}
+        onLayout={onLayoutRootView}
+      >
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+          <AppNavigator />
+        </ApplicationProvider>
+      </SafeAreaView>
+    </Provider>
   );
 }

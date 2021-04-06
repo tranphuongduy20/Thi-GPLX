@@ -46,7 +46,7 @@ export const TrangchuScreen = ({ navigation }) => {
           />
           <Layout>
             <Text style={styles.TextStyle}>Ôn tập tất cả các câu hỏi</Text>
-            <ProgressBar progress={0.69} />
+            <ProgressBar progress={0.69} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -65,7 +65,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Câu hỏi điểm liệt</Text>
-            <ProgressBar progress={0.1} />
+            <ProgressBar progress={0.1} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -80,7 +80,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Khái niệm và qui tắc</Text>
-            <ProgressBar progress={0.3} />
+            <ProgressBar progress={0.3} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -95,7 +95,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Nghiệp vụ vận tải</Text>
-            <ProgressBar progress={0.3} />
+            <ProgressBar progress={0.3} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -110,7 +110,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Văn hóa và đạo đức</Text>
-            <ProgressBar progress={0.3} />
+            <ProgressBar progress={0.3} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -125,7 +125,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Kĩ thuật lái xe</Text>
-            <ProgressBar progress={0.3} />
+            <ProgressBar progress={0.3} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -140,7 +140,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Cấu tạo và sửa chữa</Text>
-            <ProgressBar progress={0.3} />
+            <ProgressBar progress={0.3} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -155,7 +155,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Biển báo</Text>
-            <ProgressBar progress={0.3} />
+            <ProgressBar progress={0.3} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
 
@@ -170,7 +170,7 @@ export const TrangchuScreen = ({ navigation }) => {
 
           <Layout>
             <Text style={styles.TextStyle}>Sa hình</Text>
-            <ProgressBar progress={0.3} />
+            <ProgressBar progress={0.3} color={["#8c1aff"]} />
           </Layout>
         </TouchableOpacity>
       </Layout>

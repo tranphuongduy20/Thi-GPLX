@@ -10,9 +10,16 @@ export const TrangchuNavigator = () => (
     <Screen
       name="Trang chủ"
       component={TrangchuScreen}
-      options={{ headerShown: false }}
+      options={{
+        headerShown: false,
+      }}
     />
     <Screen name="Chọn loại GPLX" component={BanglaiScreen} />
     <Screen name="Câu hỏi ôn tập" component={OntapScreen} />
   </Navigator>
 );
+
+/*options={{
+  headerStyle: { backgroundColor: "#fffff" },
+  headerTintColor: "#8c1aff",
+}}*/

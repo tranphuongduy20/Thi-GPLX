@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     borderWidth: 2,
-    borderColor: "#ff1a1a",
+    borderColor: "#8c1aff",
     height: 72,
   },
   CauhoiStyle: {

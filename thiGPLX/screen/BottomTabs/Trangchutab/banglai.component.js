@@ -1,17 +1,13 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { ScrollView, TouchableOpacity } from "react-native";
-import {
-  Divider,
-  TopNavigation,
-  TopNavigationAction,
-  Layout,
-  Text,
-} from "@ui-kitten/components";
-import * as EvaIcon from "../../../src/icon/EvaIcon";
+import { Layout, Text } from "@ui-kitten/components";
+import { thaydoiBanglai, currentBanglai } from "../../../redux/banglaiSlice";
 import { styles } from "../../../style/styles";
 
 export const BanglaiScreen = ({ navigation }) => {
-  const [currentBanglai, setBanglai] = useState("A1");
+  const Selectedbanglai = useSelector(currentBanglai);
+  const dispatch = useDispatch();
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -20,9 +16,9 @@ export const BanglaiScreen = ({ navigation }) => {
           Mô tô
         </Text>
         <TouchableOpacity
-          onPress={() => setBanglai("A1")}
+          onPress={() => dispatch(thaydoiBanglai("A1"))}
           style={[
-            currentBanglai === "A1"
+            Selectedbanglai === "A1"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -34,9 +30,9 @@ export const BanglaiScreen = ({ navigation }) => {
           </Layout>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBanglai("A2")}
+          onPress={() => dispatch(thaydoiBanglai("A2"))}
           style={[
-            currentBanglai === "A2"
+            Selectedbanglai === "A2"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -48,9 +44,9 @@ export const BanglaiScreen = ({ navigation }) => {
           </Layout>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBanglai("A3")}
+          onPress={() => dispatch(thaydoiBanglai("A3"))}
           style={[
-            currentBanglai === "A3"
+            Selectedbanglai === "A3"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -62,9 +58,9 @@ export const BanglaiScreen = ({ navigation }) => {
           </Layout>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBanglai("A4")}
+          onPress={() => dispatch(thaydoiBanglai("A4"))}
           style={[
-            currentBanglai === "A4"
+            Selectedbanglai === "A4"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -80,9 +76,9 @@ export const BanglaiScreen = ({ navigation }) => {
           Ô tô
         </Text>
         <TouchableOpacity
-          onPress={() => setBanglai("B1")}
+          onPress={() => dispatch(thaydoiBanglai("B1"))}
           style={[
-            currentBanglai === "B1"
+            Selectedbanglai === "B1"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -94,9 +90,9 @@ export const BanglaiScreen = ({ navigation }) => {
           </Layout>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBanglai("B2")}
+          onPress={() => dispatch(thaydoiBanglai("B2"))}
           style={[
-            currentBanglai === "B2"
+            Selectedbanglai === "B2"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -112,9 +108,9 @@ export const BanglaiScreen = ({ navigation }) => {
           Xe lớn
         </Text>
         <TouchableOpacity
-          onPress={() => setBanglai("C")}
+          onPress={() => dispatch(thaydoiBanglai("C"))}
           style={[
-            currentBanglai === "C"
+            Selectedbanglai === "C"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -126,9 +122,9 @@ export const BanglaiScreen = ({ navigation }) => {
           </Layout>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBanglai("D")}
+          onPress={() => dispatch(thaydoiBanglai("D"))}
           style={[
-            currentBanglai === "D"
+            Selectedbanglai === "D"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -140,9 +136,9 @@ export const BanglaiScreen = ({ navigation }) => {
           </Layout>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBanglai("E")}
+          onPress={() => dispatch(thaydoiBanglai("E"))}
           style={[
-            currentBanglai === "E"
+            Selectedbanglai === "E"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
@@ -154,9 +150,9 @@ export const BanglaiScreen = ({ navigation }) => {
           </Layout>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setBanglai("F")}
+          onPress={() => dispatch(thaydoiBanglai("F"))}
           style={[
-            currentBanglai === "F"
+            Selectedbanglai === "F"
               ? styles.ButtonBanglaiPressedStyle
               : styles.ButtonBanglaiStyle,
           ]}
