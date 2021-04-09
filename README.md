@@ -47,3 +47,4 @@ Hướng dẫn chạy sa hình
 - [@react-navigation/bottom-tabs_material-top-tabs_stack](https://reactnavigation.org/)
 - [react-native-web-swiper](https://github.com/reactrondev/react-native-web-swiper)
 - [react-native-progress](https://github.com/react-native-progress-view/progress-bar-android)
+- [react-native-scroll-bottom-sheet](https://github.com/rgommezz/react-native-scroll-bottom-sheet)
