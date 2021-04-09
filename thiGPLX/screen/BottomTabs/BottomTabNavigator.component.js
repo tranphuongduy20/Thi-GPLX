@@ -4,7 +4,7 @@ import { BottomNavigation, BottomNavigationTab } from "@ui-kitten/components";
 import * as EvaIcon from "../../src/icon/EvaIcon";
 const { Navigator, Screen } = createBottomTabNavigator();
 
-import ThithuScreen from "./ThithuTab/thithu.component";
+import { ThithuNavigator } from "./ThithuTab/ThithuNavigator.component";
 import { TracuuNavigator } from "./TracuuTab/TracuuNavigator.component";
 import { TrangchuNavigator } from "./Trangchutab/TrangchuNavigator.component";
 
@@ -21,8 +21,9 @@ const BottomTabBar = ({ navigation, state }) => (
 
 export const BottomTabNavigator = () => (
   <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
+    <Screen name="ThithuNavigator" component={ThithuNavigator} />
     <Screen name="TrangchuNavigator" component={TrangchuNavigator} />
-    <Screen name="ThithuScreen" component={ThithuScreen} />
+
     <Screen name="TracuuNavigator" component={TracuuNavigator} />
   </Navigator>
 );
