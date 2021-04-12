@@ -20,8 +20,12 @@ export const TracuuScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation title="Tra cứu" alignment="center" />
       <Divider />
-      <Layout style={{ alignItems: "center", flex: 1 }}>
-        <ButtonGroup size="giant" appearance="outline" style={{ width: "90%" }}>
+      <Layout style={{ alignItems: "center" }}>
+        <ButtonGroup
+          size="giant"
+          appearance="outline"
+          style={{ width: "100%" }}
+        >
           <Button
             accessoryLeft={EvaIcon.CarIcon}
             onPress={() => navigateScreen("Sa hình")}
@@ -45,7 +49,7 @@ export const TracuuScreen = ({ navigation }) => {
           </Button>
         </ButtonGroup>
       </Layout>
-      <Layout style={{ flex: 5 }}>
+      <Layout style={{ flex: 1 }}>
         <Swiper
           from={1}
           minDistanceForAction={0.1}

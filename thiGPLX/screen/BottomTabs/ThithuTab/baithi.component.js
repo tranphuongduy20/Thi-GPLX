@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
+import Swiper from "react-native-web-swiper";
 
 class QuestionList extends PureComponent {
   render() {
     return (
       <TouchableOpacity style={styles.item}>
-        <Text>Câu {this.props.order}</Text>
+        <Text>Câu {parseInt(this.props.order) + 1}</Text>
       </TouchableOpacity>
     );
   }
@@ -21,6 +22,60 @@ class QuestionList extends PureComponent {
 export const BaithiScreen = () => {
   return (
     <View style={styles.container}>
+      <View style={{ flex: 1 }}>
+        <Swiper
+          from={0}
+          minDistanceForAction={0.1}
+          controlsEnabled={false}
+          controlsProps={{
+            dotsTouchable: true,
+            prevPos: "left",
+            nextPos: "right",
+            nextTitle: ">",
+            nextTitleStyle: { color: "red", fontSize: 24, fontWeight: "500" },
+            PrevComponent: ({ onPress }) => (
+              <TouchableOpacity onPress={onPress}>
+                <Text
+                  style={{ color: "white", fontSize: 24, fontWeight: "500" }}
+                >
+                  {"<"}
+                </Text>
+              </TouchableOpacity>
+            ),
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(20,20,200,0.3)",
+            }}
+          >
+            <Text>Slide 1</Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(20,200,20,0.3)",
+            }}
+          >
+            <Text>Slide 2</Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(200,20,20,0.3)",
+            }}
+          >
+            <Text>Slide 3</Text>
+          </View>
+        </Swiper>
+      </View>
       <ScrollBottomSheet // If you are using TS, that'll infer the renderItem `item` type
         componentType="FlatList"
         snapPoints={["35%", "74%"]}

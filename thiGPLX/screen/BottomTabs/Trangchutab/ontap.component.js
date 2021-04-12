@@ -19,16 +19,10 @@ import Swiper from "react-native-web-swiper";
 import * as EvaIcon from "../../../src/icon/EvaIcon";
 import { styles } from "../../../style/styles";
 
-const data = new Array(8).fill({
-  title: "tem",
-});
-
 export const OntapScreen = ({ navigation }) => {
   const renderItemHeader = (headerProps, info) => (
     <SafeAreaView {...headerProps}>
-      <Text category="h6">
-        {info.item.title} {info.index + 1}
-      </Text>
+      <Text category="h6">Câu hỏi {info.index + 1}</Text>
     </SafeAreaView>
   );
 
@@ -54,9 +48,9 @@ export const OntapScreen = ({ navigation }) => {
   );
   return (
     <FlatList
-      data={data}
+      data={Array.from({ length: 30 }).map((_, i) => String(i))}
       renderItem={renderItem}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(i) => i}
     />
   );
 };
