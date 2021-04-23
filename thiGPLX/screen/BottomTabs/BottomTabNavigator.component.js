@@ -21,9 +21,8 @@ const BottomTabBar = ({ navigation, state }) => (
 
 export const BottomTabNavigator = () => (
   <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
-    <Screen name="ThithuNavigator" component={ThithuNavigator} />
     <Screen name="TrangchuNavigator" component={TrangchuNavigator} />
-
+    <Screen name="ThithuNavigator" component={ThithuNavigator} />
     <Screen name="TracuuNavigator" component={TracuuNavigator} />
   </Navigator>
 );

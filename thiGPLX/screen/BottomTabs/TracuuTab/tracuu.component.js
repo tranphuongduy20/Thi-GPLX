@@ -8,7 +8,7 @@ import {
   Divider,
   ButtonGroup,
 } from "@ui-kitten/components";
-import Swiper from "react-native-web-swiper";
+import Swiper from "react-native-swiper";
 import * as EvaIcon from "../../../src/icon/EvaIcon";
 
 export const TracuuScreen = ({ navigation }) => {
@@ -50,26 +50,7 @@ export const TracuuScreen = ({ navigation }) => {
         </ButtonGroup>
       </Layout>
       <Layout style={{ flex: 1 }}>
-        <Swiper
-          from={1}
-          minDistanceForAction={0.1}
-          controlsProps={{
-            dotsTouchable: true,
-            prevPos: "left",
-            nextPos: "right",
-            nextTitle: ">",
-            nextTitleStyle: { color: "red", fontSize: 24, fontWeight: "500" },
-            PrevComponent: ({ onPress }) => (
-              <TouchableOpacity onPress={onPress}>
-                <Text
-                  style={{ color: "white", fontSize: 24, fontWeight: "500" }}
-                >
-                  {"<"}
-                </Text>
-              </TouchableOpacity>
-            ),
-          }}
-        >
+        <Swiper autoplay={true} autoplayTimeout={6}>
           <Layout
             style={{
               flex: 1,

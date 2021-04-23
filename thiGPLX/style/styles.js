@@ -8,6 +8,12 @@ export const styles = StyleSheet.create({
     width: 64,
     resizeMode: "stretch",
   },
+  ImageStyle: {
+    margin: 16,
+    height: 100,
+    width: 100,
+    resizeMode: "stretch",
+  },
   TextStyle: {
     marginBottom: 4,
     marginRight: 20,
@@ -44,7 +50,25 @@ export const styles = StyleSheet.create({
     borderColor: "#8c1aff",
     height: 72,
   },
+  ButtonBienbaoStyle: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
+    borderBottomWidth: 2,
+    borderColor: "#ccccff",
+    height: 100,
+    borderRadius: 0,
+  },
   CauhoiStyle: {
     flex: 1,
+  },
+  paginationStyle: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+  },
+  paginationText: {
+    fontSize: 20,
   },
 });

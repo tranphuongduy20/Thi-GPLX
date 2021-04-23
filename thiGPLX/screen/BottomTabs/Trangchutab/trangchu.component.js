@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
+import { TouchableOpacity, Image, ScrollView } from "react-native";
 import {
   Layout,
   Text,

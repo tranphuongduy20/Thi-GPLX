@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SahinhScreen } from "./sahinh.component";
-import { BienbaoScreen } from "./bienbao.component";
+import { BienbaoNavigator } from "./BienbaoTab/BienbaoNavigator.component";
 import { LuatScreen } from "./luat.component";
 import { TracuuScreen } from "./tracuu.component";
 
@@ -15,7 +15,7 @@ export const TracuuNavigator = () => (
       options={{ headerShown: false }}
     />
     <Screen name="Sa hình" component={SahinhScreen} />
-    <Screen name="Biển báo" component={BienbaoScreen} />
+    <Screen name="Biển báo" component={BienbaoNavigator} />
     <Screen name="Pháp luật" component={LuatScreen} />
   </Navigator>
 );

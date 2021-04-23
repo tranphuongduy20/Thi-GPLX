@@ -18,3 +18,11 @@ export const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 export const BookIcon = (props) => <Icon name="book" {...props} />;
 
 export const ListIcon = (props) => <Icon name="list" {...props} />;
+
+export const ArrowBackIcon = (props) => (
+  <Icon name="arrow-ios-back" {...props} />
+);
+
+export const ArrowForwardIcon = (props) => (
+  <Icon name="arrow-ios-forward" {...props} />
+);
