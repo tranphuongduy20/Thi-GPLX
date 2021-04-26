@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Text, View, TouchableOpacity, Button } from "react-native";
 import Swiper from "react-native-swiper";
 import { CauhoiForm } from "./taoCauhoi.component";
@@ -15,16 +15,32 @@ export const TaoBaithi = (props) => {
           scrollEnabled={false}
         >
           <View>
-            <CauhoiForm index={1} />
+            <CauhoiForm
+              index={1}
+              ghiNhanCautraloi={props.ghiNhanCautraloi}
+              traLoi={props.data.cauTraloi[0]}
+            />
           </View>
           <View>
-            <CauhoiForm index={2} />
+            <CauhoiForm
+              index={2}
+              ghiNhanCautraloi={props.ghiNhanCautraloi}
+              traLoi={props.data.cauTraloi[1]}
+            />
           </View>
           <View>
-            <CauhoiForm index={3} />
+            <CauhoiForm
+              index={3}
+              ghiNhanCautraloi={props.ghiNhanCautraloi}
+              traLoi={props.data.cauTraloi[2]}
+            />
           </View>
           <View>
-            <CauhoiForm index={4} />
+            <CauhoiForm
+              index={4}
+              ghiNhanCautraloi={props.ghiNhanCautraloi}
+              traLoi={props.data.cauTraloi[3]}
+            />
           </View>
           <View>
             <CauhoiForm index={5} />

@@ -71,4 +71,17 @@ export const styles = StyleSheet.create({
   paginationText: {
     fontSize: 20,
   },
+  CautraloiOnclick: {
+    borderWidth: 2,
+    borderColor: "#8c1aff",
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: "7%",
+  },
+  CautraloiUnclick: {
+    borderWidth: 0,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: "7%",
+  },
 });

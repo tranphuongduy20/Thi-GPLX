@@ -24,6 +24,7 @@
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-bootsplash": "^3.2.0",
+    "react-native-countdown-circle-timer": "^2.5.1",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-loading-spinner-overlay": "^2.0.0",
     "react-native-modals": "^0.22.3",
