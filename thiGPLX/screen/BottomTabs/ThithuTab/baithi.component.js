@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo } from "react";
+import React, { useRef, useState, memo, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -37,10 +37,29 @@ const QuestionList = (props) => {
 
 memo(QuestionList);
 
-export const BaithiScreen = () => {
-  const [data, setData] = useState({ cauTraloi: Array(30).fill("E") });
+export const BaithiScreen = ({ navigation }) => {
+  const [data, setData] = useState({
+    cauTraloi: Array(30).fill("E"),
+    cauDapan: Array(30).fill("A"),
+  });
+  const [cauDung, setCaudung] = useState(20);
+  const [nopBai, setNopbai] = useState(false);
   const trigger = useRef(null);
   const [jump, setJump] = useState(1);
+  const [key, setKey] = useState(0);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => setNopbai(true)}
+          activeOpacity={0.5}
+          style={{ marginRight: 18 }}
+        >
+          <Text>Nộp bài</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, nopBai]);
 
   const NextQuestion = (index) => {
     if (index > 1) {
@@ -117,23 +136,36 @@ export const BaithiScreen = () => {
         }}
       >
         <View style={{ flex: 1, marginRight: "1%" }}>
-          <Text>Ua {data.cauTraloi[0]}</Text>
+          <Text>
+            Ua {data.cauTraloi[0]} {data.cauDapan[0]}
+          </Text>
           <TaodanhsachCauhoi loaiBanglai={"A1"} />
         </View>
         <CountdownCircleTimer
+          key={key}
           {...timerProps}
           duration={600}
           colors={[
-            ["#bf80ff", 0.4],
-            ["#9933ff", 0.4],
-            ["#5900b3", 0.2],
+            nopBai == false
+              ? ["#8c1aff", 1]
+              : [cauDung < 15 ? "#ff1a1a" : "#00ff00", 1],
           ]}
+          onComplete={() => {
+            setNopbai(true);
+            setKey((prevKey) => prevKey + 1);
+          }}
         >
-          {({ remainingTime, animatedColor }) => (
-            <Text>
-              {Math.floor(remainingTime / 60)}:{remainingTime % 60}
-            </Text>
-          )}
+          {({ remainingTime, animatedColor }) => {
+            if (nopBai == false)
+              return (
+                <Text>
+                  {Math.floor(remainingTime / 60)}:{remainingTime % 60}
+                </Text>
+              );
+            else {
+              return <Text>{cauDung}/30</Text>;
+            }
+          }}
         </CountdownCircleTimer>
       </View>
       <View
@@ -147,19 +179,20 @@ export const BaithiScreen = () => {
         <Button
           accessoryLeft={EvaIcon.ArrowBackIcon}
           onPress={() => NextQuestion(jump > 1 ? jump - 1 : jump)}
-          style={{ width: "1%", height: "1%" }}
+          style={{ width: "1%", height: "1%", borderRadius: 100 }}
         ></Button>
         <TaoBaithi
           loaiBanglai={"A1"}
           jump={jump}
           trigger={trigger}
           data={data}
+          nopBai={nopBai}
           ghiNhanCautraloi={ghiNhanCautraloi}
         />
         <Button
           accessoryLeft={EvaIcon.ArrowForwardIcon}
           onPress={() => NextQuestion(jump < 30 ? jump + 1 : jump)}
-          style={{ width: "1%", height: "1%" }}
+          style={{ width: "1%", height: "1%", borderRadius: 100 }}
         ></Button>
       </View>
     </View>

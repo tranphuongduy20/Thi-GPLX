@@ -22,15 +22,6 @@ export const ThithuNavigator = () => (
       options={{
         headerTitleAlign: "center",
         title: "Thời gian",
-        headerRight: () => (
-          <TouchableOpacity
-            onPress={() => alert("Kết thúc làm bài!")}
-            activeOpacity={0.5}
-            style={{ marginRight: 18 }}
-          >
-            <Text>Nộp bài</Text>
-          </TouchableOpacity>
-        ),
       }}
     />
   </Navigator>

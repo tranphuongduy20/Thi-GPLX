@@ -19,6 +19,9 @@ export const TaoBaithi = (props) => {
               index={1}
               ghiNhanCautraloi={props.ghiNhanCautraloi}
               traLoi={props.data.cauTraloi[0]}
+              dapAn={props.data.cauDapan[0]}
+              nopBai={props.nopBai}
+              baiThi={true}
             />
           </View>
           <View>
@@ -26,6 +29,8 @@ export const TaoBaithi = (props) => {
               index={2}
               ghiNhanCautraloi={props.ghiNhanCautraloi}
               traLoi={props.data.cauTraloi[1]}
+              dapAn={props.data.cauDapan[1]}
+              nopBai={props.nopBai}
             />
           </View>
           <View>
@@ -33,6 +38,8 @@ export const TaoBaithi = (props) => {
               index={3}
               ghiNhanCautraloi={props.ghiNhanCautraloi}
               traLoi={props.data.cauTraloi[2]}
+              dapAn={props.data.cauDapan[2]}
+              nopBai={props.nopBai}
             />
           </View>
           <View>
