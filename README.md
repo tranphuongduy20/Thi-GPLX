@@ -50,3 +50,4 @@ Hướng dẫn chạy sa hình
 - [react-native-scroll-bottom-sheet](https://github.com/rgommezz/react-native-scroll-bottom-sheet)
 - [react-native-loading-spinner-overlay](https://github.com/joinspontaneous/react-native-loading-spinner-overlay)
 - [react-native-modals](https://github.com/jacklam718/react-native-modals)
+- [react-timer](https://github.com/vydimitrov/react-countdown-circle-timer/tree/master/packages/mobile)
