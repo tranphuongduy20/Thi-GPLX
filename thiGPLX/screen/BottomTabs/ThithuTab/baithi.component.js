@@ -45,7 +45,6 @@ export const BaithiScreen = ({ navigation }) => {
   const [cauDung, setCaudung] = useState(20);
   const [nopBai, setNopbai] = useState(false);
   const trigger = useRef(null);
-  const [jump, setJump] = useState(1);
   const [key, setKey] = useState(0);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -62,13 +61,7 @@ export const BaithiScreen = ({ navigation }) => {
   }, [navigation, nopBai]);
 
   const NextQuestion = (index) => {
-    if (index > 1) {
-      trigger.current.scrollBy(jump >= index ? -(jump - index) : index - jump);
-      setJump(index);
-    } else {
-      trigger.current.scrollBy(-(jump - 1));
-      setJump(1);
-    }
+    trigger.current.scrollTo(index - 1);
   };
   const ghiNhanCautraloi = (index, value) => {
     if (value != data.cauTraloi[index]) {
@@ -87,44 +80,23 @@ export const BaithiScreen = ({ navigation }) => {
           onSelect={(index) => setSelectedIndex(index)}
           size="medium"
         >
-          <SelectGroup title="Phần 1">
-            <SelectItem title="Câu 1" onPress={() => NextQuestion(1)} />
-            <SelectItem title="Câu 2" onPress={() => NextQuestion(2)} />
-            <SelectItem title="Câu 3" onPress={() => NextQuestion(3)} />
-            <SelectItem title="Câu 4" onPress={() => NextQuestion(4)} />
-            <SelectItem title="Câu 5" onPress={() => NextQuestion(5)} />
-            <SelectItem title="Câu 6" onPress={() => NextQuestion(6)} />
-            <SelectItem title="Câu 7" onPress={() => NextQuestion(7)} />
-            <SelectItem title="Câu 8" onPress={() => NextQuestion(8)} />
-            <SelectItem title="Câu 9" onPress={() => NextQuestion(9)} />
-            <SelectItem title="Câu 10" onPress={() => NextQuestion(10)} />
-            <SelectItem title="Câu 11" onPress={() => NextQuestion(11)} />
-            <SelectItem title="Câu 12" onPress={() => NextQuestion(12)} />
-            <SelectItem title="Câu 13" onPress={() => NextQuestion(13)} />
-            <SelectItem title="Câu 14" onPress={() => NextQuestion(14)} />
-            <SelectItem title="Câu 15" onPress={() => NextQuestion(15)} />
-          </SelectGroup>
-          <SelectGroup title="Phần 2">
-            <SelectItem title="Câu 16" onPress={() => NextQuestion(16)} />
-            <SelectItem title="Câu 17" onPress={() => NextQuestion(17)} />
-            <SelectItem title="Câu 18" onPress={() => NextQuestion(18)} />
-            <SelectItem title="Câu 19" onPress={() => NextQuestion(19)} />
-            <SelectItem title="Câu 20" onPress={() => NextQuestion(20)} />
-            <SelectItem title="Câu 21" onPress={() => NextQuestion(21)} />
-            <SelectItem title="Câu 22" onPress={() => NextQuestion(22)} />
-            <SelectItem title="Câu 23" onPress={() => NextQuestion(23)} />
-            <SelectItem title="Câu 24" onPress={() => NextQuestion(24)} />
-            <SelectItem title="Câu 25" onPress={() => NextQuestion(25)} />
-            <SelectItem title="Câu 26" onPress={() => NextQuestion(26)} />
-            <SelectItem title="Câu 27" onPress={() => NextQuestion(27)} />
-            <SelectItem title="Câu 28" onPress={() => NextQuestion(28)} />
-            <SelectItem title="Câu 29" onPress={() => NextQuestion(29)} />
-            <SelectItem title="Câu 30" onPress={() => NextQuestion(30)} />
-          </SelectGroup>
+          <SelectItem
+            title="Phần 1: Từ Câu 1 đến Câu 10"
+            onPress={() => NextQuestion(1)}
+          />
+          <SelectItem
+            title="Phần 2: Từ Câu 11 đến Câu 20"
+            onPress={() => NextQuestion(11)}
+          />
+          <SelectItem
+            title="Phần 3: Từ Câu 21 đến Câu 30"
+            onPress={() => NextQuestion(21)}
+          />
         </Select>
       );
     }
   };
+  memo(TaodanhsachCauhoi);
   return (
     <View style={styles.container}>
       <View
@@ -132,15 +104,18 @@ export const BaithiScreen = ({ navigation }) => {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          margin: "1%",
         }}
       >
-        <View style={{ flex: 1, marginRight: "1%" }}>
-          <Text>
-            Ua {data.cauTraloi[0]} {data.cauDapan[0]}
-          </Text>
-          <TaodanhsachCauhoi loaiBanglai={"A1"} />
-        </View>
+        <Button
+          accessoryLeft={EvaIcon.ArrowBackIcon}
+          onPress={() => trigger.current.scrollBy(-1)}
+          style={{
+            width: "20%",
+            height: "1%",
+            borderRadius: 100,
+            marginRight: "11%",
+          }}
+        ></Button>
         <CountdownCircleTimer
           key={key}
           {...timerProps}
@@ -167,33 +142,38 @@ export const BaithiScreen = ({ navigation }) => {
             }
           }}
         </CountdownCircleTimer>
+        <Button
+          accessoryLeft={EvaIcon.ArrowForwardIcon}
+          onPress={() => trigger.current.scrollBy(1)}
+          style={{
+            width: "20%",
+            height: "1%",
+            borderRadius: 100,
+            marginLeft: "11%",
+          }}
+        ></Button>
       </View>
+      <TaoBaithi
+        loaiBanglai={"A1"}
+        trigger={trigger}
+        data={data}
+        nopBai={nopBai}
+        ghiNhanCautraloi={ghiNhanCautraloi}
+      />
       <View
         style={{
           flexDirection: "row",
           justifyContent: "center",
-          flex: 1,
           alignItems: "center",
+          margin: "1%",
         }}
       >
-        <Button
-          accessoryLeft={EvaIcon.ArrowBackIcon}
-          onPress={() => NextQuestion(jump > 1 ? jump - 1 : jump)}
-          style={{ width: "1%", height: "1%", borderRadius: 100 }}
-        ></Button>
-        <TaoBaithi
-          loaiBanglai={"A1"}
-          jump={jump}
-          trigger={trigger}
-          data={data}
-          nopBai={nopBai}
-          ghiNhanCautraloi={ghiNhanCautraloi}
-        />
-        <Button
-          accessoryLeft={EvaIcon.ArrowForwardIcon}
-          onPress={() => NextQuestion(jump < 30 ? jump + 1 : jump)}
-          style={{ width: "1%", height: "1%", borderRadius: 100 }}
-        ></Button>
+        <View style={{ flex: 1, marginRight: "1%" }}>
+          <Text>
+            Ua {data.cauTraloi[0]} {data.cauDapan[0]}
+          </Text>
+          <TaodanhsachCauhoi loaiBanglai={"A1"} />
+        </View>
       </View>
     </View>
   );

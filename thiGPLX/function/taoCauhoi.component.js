@@ -46,12 +46,23 @@ const renderItemFooter = (
   ghiNhanCautraloi
 ) => {
   const [modal, setModal] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [questionData, setQuestion] = useState({ cauHoi: "", giaiThich: "" });
+  const [answerData, setAnswer] = useState({ cau1: "", cau2: "", cau3: "" });
   const showExplain = (nopBai) => {
     if (nopBai == true)
       return <Button onPress={() => setModal(true)}>Giải thích</Button>;
   };
+  useEffect(() => {
+    const quesData = ["Cau hoi", "Giai thich"];
+    const ansData = ["Cau 1", "Cau 2", "Cau 3"];
+    setQuestion({ cauHoi: quesData[0], giaiThich: quesData[1] });
+    setAnswer({ cau1: ansData[0], cau2: ansData[1], cau3: ansData[2] });
+    setUpdate(true);
+  }, [update]);
   return (
     <SafeAreaView>
+      <Text>{questionData.cauHoi}</Text>
       <TouchableOpacity
         onPress={() => {
           if ((baiThi == true && nopBai == false) || baiThi == false)
@@ -59,7 +70,7 @@ const renderItemFooter = (
         }}
         style={chamBai("A", traLoi, dapAn, nopBai, baiThi)}
       >
-        <Text>A.Lorem Ipsum is simply dummy</Text>
+        <Text>1.{answerData.cau1}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
@@ -68,7 +79,7 @@ const renderItemFooter = (
         }}
         style={chamBai("B", traLoi, dapAn, nopBai, baiThi)}
       >
-        <Text>B.Lorem Ipsum is simply dummy</Text>
+        <Text>2.{answerData.cau2}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
@@ -77,16 +88,7 @@ const renderItemFooter = (
         }}
         style={chamBai("C", traLoi, dapAn, nopBai, baiThi)}
       >
-        <Text>C.Lorem Ipsum is simply dummy</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          if ((baiThi == true && nopBai == false) || baiThi == false)
-            ghiNhanCautraloi(index - 1, "D");
-        }}
-        style={chamBai("D", traLoi, dapAn, nopBai, baiThi)}
-      >
-        <Text>D.Lorem Ipsum is simply dummy</Text>
+        <Text>3.{answerData.cau3}</Text>
       </TouchableOpacity>
       {showExplain(nopBai)}
       <Modal

@@ -8,12 +8,7 @@ export const TaoBaithi = (props) => {
   if (props.loaiBanglai == "A1") {
     return (
       <View style={{ flex: 1 }} removeClippedSubviews={true}>
-        <Swiper
-          loop={false}
-          ref={props.trigger}
-          showsPagination={false}
-          scrollEnabled={false}
-        >
+        <Swiper loop={false} ref={props.trigger} showsPagination={false}>
           <View>
             <CauhoiForm
               index={1}
