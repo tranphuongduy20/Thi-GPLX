@@ -1,4 +1,10 @@
-import React, { useRef, useState, memo, useLayoutEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  memo,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 import {
   StyleSheet,
   Text,
@@ -17,13 +23,15 @@ const timerProps = {
   size: 70,
   strokeWidth: 8,
 };
-
 const children = ({ remainingTime }) => {
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;
 
   return `${minutes}:${seconds}`;
 };
+
+const url =
+  "https://webhooks.mongodb-realm.com/api/client/v2.0/app/thigplx-ofrhb/service/thiGPLXapi/incoming_webhook/questionAPI";
 
 const QuestionList = (props) => {
   return (
@@ -44,8 +52,23 @@ export const BaithiScreen = ({ navigation }) => {
   });
   const [cauDung, setCaudung] = useState(20);
   const [nopBai, setNopbai] = useState(false);
+  const [taoData, setTaodata] = useState(true);
   const trigger = useRef(null);
   const [key, setKey] = useState(0);
+  const [questionList, setQuestionList] = useState({
+    section1: [{ content: "" }],
+    section2: [],
+  });
+  useEffect(() => {
+    fetch(url + "?type=Câu hỏi điểm liệt-A1")
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        setQuestionList((prevState) => ({ ...prevState, section1: response }));
+        //console.log(questionList.section1[0].content);
+      });
+  }, [taoData]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -169,9 +192,7 @@ export const BaithiScreen = ({ navigation }) => {
         }}
       >
         <View style={{ flex: 1, marginRight: "1%" }}>
-          <Text>
-            Ua {data.cauTraloi[0]} {data.cauDapan[0]}
-          </Text>
+          <Text>{questionList.section1[0].content}</Text>
           <TaodanhsachCauhoi loaiBanglai={"A1"} />
         </View>
       </View>

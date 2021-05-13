@@ -53,13 +53,6 @@ const renderItemFooter = (
     if (nopBai == true)
       return <Button onPress={() => setModal(true)}>Giải thích</Button>;
   };
-  useEffect(() => {
-    const quesData = ["Cau hoi", "Giai thich"];
-    const ansData = ["Cau 1", "Cau 2", "Cau 3"];
-    setQuestion({ cauHoi: quesData[0], giaiThich: quesData[1] });
-    setAnswer({ cau1: ansData[0], cau2: ansData[1], cau3: ansData[2] });
-    setUpdate(true);
-  }, [update]);
   return (
     <SafeAreaView>
       <Text>{questionData.cauHoi}</Text>
