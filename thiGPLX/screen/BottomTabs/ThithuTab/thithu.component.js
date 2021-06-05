@@ -9,9 +9,13 @@ import {
 } from "@ui-kitten/components";
 import Spinner from "react-native-loading-spinner-overlay";
 import { styles } from "../../../style/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { taolaiCautraloi } from "../../../redux/cauhoiSlice";
 
 export const ThithuScreen = ({ navigation }) => {
   const [spinner, setSpinner] = useState(false);
+  const dispatch = useDispatch();
+
   const navigateScreen = (ScreenName) => {
     navigation.navigate(ScreenName);
   };
@@ -39,6 +43,7 @@ export const ThithuScreen = ({ navigation }) => {
         />
         <TouchableOpacity
           onPress={() => {
+            dispatch(taolaiCautraloi());
             setSpinner((spinner) => true);
             /*navigateScreen("Bài thi");*/
           }}

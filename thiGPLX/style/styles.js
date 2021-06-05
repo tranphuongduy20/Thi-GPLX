@@ -86,14 +86,14 @@ export const styles = StyleSheet.create({
   },
   CautraloiDung: {
     borderWidth: 3,
-    borderColor: "#00e600",
+    borderColor: "#00cc00",
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: "7%",
   },
   CautraloiSai: {
     borderWidth: 2,
-    borderColor: "red",
+    borderColor: "#ff6666",
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: "7%",

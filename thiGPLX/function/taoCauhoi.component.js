@@ -1,5 +1,11 @@
-import React, { memo, useEffect, useState } from "react";
-import { TouchableOpacity, SafeAreaView } from "react-native";
+import React, {
+  memo,
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import { TouchableOpacity, SafeAreaView, View, Image } from "react-native";
 import { Text, Card, Button } from "@ui-kitten/components";
 import { styles } from "../style/styles";
 import Modal, {
@@ -12,7 +18,34 @@ import Modal, {
   BottomModal,
   ModalPortal,
 } from "react-native-modals";
+import { useSelector, useDispatch } from "react-redux";
+import { ghiNhanCautraloi, currentCauhoi } from "../redux/cauhoiSlice";
 
+const setCautraloi = (index, traLoi) => {
+  return {
+    order: index,
+    answer: traLoi,
+  };
+};
+
+const cauhoiSection = (question) => {
+  if (question != undefined && question.url != undefined) {
+    return (
+      <View>
+        <Image
+          style={{
+            width: question.type == "Biển báo" ? 400 : 350,
+            height: question.type == "Biển báo" ? 150 : 200,
+            alignSelf: "center",
+          }}
+          source={{
+            uri: question.url,
+          }}
+        />
+      </View>
+    );
+  } else return <Text>{question.content}</Text>;
+};
 const chamBai = (hienTai, traLoi, dapAn, nopBai, baiThi) => {
   if (baiThi == true) {
     if (hienTai == traLoi && nopBai == false) {
@@ -29,61 +62,156 @@ const chamBai = (hienTai, traLoi, dapAn, nopBai, baiThi) => {
     }
   }
 };
-
-const renderItemHeader = (headerProps, index) => (
+const traLoiSection = (answer, index, test, setTest, dapAn, nopBai, baiThi) => {
+  switch (answer.length) {
+    case 2:
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("A");
+            }}
+            style={chamBai("A", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>1. {answer[0][0]}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("B");
+            }}
+            style={chamBai("B", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>2. {answer[1][0]}</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    case 3:
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("A");
+            }}
+            style={chamBai("A", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>1. {answer[0][0]}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false) {
+                setTest("B");
+              }
+            }}
+            style={chamBai("B", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>2. {answer[1][0]}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("C");
+            }}
+            style={chamBai("C", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>3. {answer[2][0]}</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    case 4:
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("A");
+            }}
+            style={chamBai("A", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>1. {answer[0][0]}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("B");
+            }}
+            style={chamBai("B", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>2. {answer[1][0]}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("C");
+            }}
+            style={chamBai("C", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>3. {answer[2][0]}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              if ((baiThi == true && nopBai == false) || baiThi == false)
+                setTest("D");
+            }}
+            style={chamBai("D", test, dapAn, nopBai, baiThi)}
+          >
+            <Text>4. {answer[3][0]}</Text>
+          </TouchableOpacity>
+        </View>
+      );
+  }
+};
+const renderItemHeader = (headerProps, index, question) => (
   <SafeAreaView {...headerProps}>
-    <Text category="h6">Câu hỏi {index}</Text>
+    <Text category="h6">
+      Câu hỏi {index}:{" "}
+      {question == undefined
+        ? "Loading . . . "
+        : question.url != undefined
+        ? question.content
+        : ""}
+    </Text>
   </SafeAreaView>
 );
 
 const renderItemFooter = (
   footerProps,
   index,
-  traLoi,
+  question,
+  test,
+  setTest,
   dapAn,
   nopBai,
-  baiThi,
-  ghiNhanCautraloi
+  baiThi
 ) => {
+  const SelectedTraloi = useSelector(currentCauhoi);
   const [modal, setModal] = useState(false);
-  const [update, setUpdate] = useState(false);
-  const [questionData, setQuestion] = useState({ cauHoi: "", giaiThich: "" });
-  const [answerData, setAnswer] = useState({ cau1: "", cau2: "", cau3: "" });
   const showExplain = (nopBai) => {
     if (nopBai == true)
       return <Button onPress={() => setModal(true)}>Giải thích</Button>;
   };
+
   return (
-    <SafeAreaView>
-      <Text>{questionData.cauHoi}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          if ((baiThi == true && nopBai == false) || baiThi == false)
-            ghiNhanCautraloi(index - 1, "A");
-        }}
-        style={chamBai("A", traLoi, dapAn, nopBai, baiThi)}
-      >
-        <Text>1.{answerData.cau1}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          if ((baiThi == true && nopBai == false) || baiThi == false)
-            ghiNhanCautraloi(index - 1, "B");
-        }}
-        style={chamBai("B", traLoi, dapAn, nopBai, baiThi)}
-      >
-        <Text>2.{answerData.cau2}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          if ((baiThi == true && nopBai == false) || baiThi == false)
-            ghiNhanCautraloi(index - 1, "C");
-        }}
-        style={chamBai("C", traLoi, dapAn, nopBai, baiThi)}
-      >
-        <Text>3.{answerData.cau3}</Text>
-      </TouchableOpacity>
+    <View>
+      {question == undefined ? (
+        <Text>Wait . . .</Text>
+      ) : (
+        traLoiSection(
+          question.answer,
+          index,
+          test,
+          setTest,
+          dapAn,
+          nopBai,
+          baiThi
+        )
+      )}
       {showExplain(nopBai)}
+      <Text>
+        Chọn câu: {SelectedTraloi[index - 1]} --- Câu đúng: {dapAn}
+      </Text>
       <Modal
         onTouchOutside={() => {
           setModal(false);
@@ -120,36 +248,44 @@ const renderItemFooter = (
               { alignSelf: "center", marginLeft: "5%" },
             ]}
           >
-            Giải thích . . .
+            {question == undefined ? "Wait" : question.explanation}
           </Text>
         </ModalContent>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 
-export const CauhoiForm = memo((props) => {
+export const CauhoiForm = forwardRef((props, ref) => {
+  const SelectedTraloi = useSelector(currentCauhoi);
+  const [test, setTest] = useState(SelectedTraloi[props.index - 1]);
+  const dispatch = useDispatch();
+
+  useImperativeHandle(ref, () => ({
+    sendAnswer() {
+      dispatch(ghiNhanCautraloi(setCautraloi(props.index - 1, test)));
+    },
+  }));
   return (
     <Card
       status="basic"
-      header={(headerProps) => renderItemHeader(headerProps, props.index)}
+      header={(headerProps) =>
+        renderItemHeader(headerProps, props.index, props.question)
+      }
       footer={(footerProps) =>
         renderItemFooter(
           footerProps,
           props.index,
-          props.traLoi,
+          props.question,
+          test,
+          setTest,
           props.dapAn,
           props.nopBai,
-          props.baiThi,
-          props.ghiNhanCautraloi
+          props.baiThi
         )
       }
     >
-      <Text>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s
-      </Text>
+      {cauhoiSection(props.question)}
     </Card>
   );
 });

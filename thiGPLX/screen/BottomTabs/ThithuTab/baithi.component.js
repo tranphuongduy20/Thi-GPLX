@@ -4,6 +4,7 @@ import React, {
   memo,
   useLayoutEffect,
   useEffect,
+  createRef,
 } from "react";
 import {
   StyleSheet,
@@ -14,9 +15,11 @@ import {
 } from "react-native";
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
 import { Select, SelectItem, Button, SelectGroup } from "@ui-kitten/components";
-import { TaoBaithi } from "../../../function/taoBaithi.component";
+import TaoBaithi from "../../../function/taoBaithi.component";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import * as EvaIcon from "../../../src/icon/EvaIcon";
+import { useSelector } from "react-redux";
+import { currentCauhoi } from "../../../redux/cauhoiSlice";
 
 const timerProps = {
   isPlaying: true,
@@ -30,8 +33,7 @@ const children = ({ remainingTime }) => {
   return `${minutes}:${seconds}`;
 };
 
-const url =
-  "https://webhooks.mongodb-realm.com/api/client/v2.0/app/thigplx-ofrhb/service/thiGPLXapi/incoming_webhook/questionAPI";
+const url = "https://thi-gplx.herokuapp.com/A1";
 
 const QuestionList = (props) => {
   return (
@@ -46,34 +48,43 @@ const QuestionList = (props) => {
 memo(QuestionList);
 
 export const BaithiScreen = ({ navigation }) => {
-  const [data, setData] = useState({
-    cauTraloi: Array(30).fill("E"),
-    cauDapan: Array(30).fill("A"),
-  });
-  const [cauDung, setCaudung] = useState(20);
+  const Diemso = useSelector(currentCauhoi);
   const [nopBai, setNopbai] = useState(false);
   const [taoData, setTaodata] = useState(true);
   const trigger = useRef(null);
+  const triggerAnswer = useRef(Array(30).fill(createRef()));
   const [key, setKey] = useState(0);
-  const [questionList, setQuestionList] = useState({
-    section1: [{ content: "" }],
-    section2: [],
-  });
+  const [questionList, setQuestionList] = useState(
+    Array(25).fill({
+      content: "Loading . . .",
+      explanation: "Loading . . .",
+      answer: [
+        ["", false],
+        ["", false],
+        ["", false],
+      ],
+    })
+  );
+
   useEffect(() => {
-    fetch(url + "?type=Câu hỏi điểm liệt-A1")
+    fetch(url + "/TaoDe")
       .then((response) => {
         return response.json();
       })
       .then((response) => {
-        setQuestionList((prevState) => ({ ...prevState, section1: response }));
-        //console.log(questionList.section1[0].content);
+        //setQuestionList((prevState) => ({ ...prevState, section1: response }));
+        setQuestionList(response);
+        // console.log(questionList);
       });
   }, [taoData]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={() => setNopbai(true)}
+          onPress={() => {
+            handleFinish();
+          }}
           activeOpacity={0.5}
           style={{ marginRight: 18 }}
         >
@@ -86,12 +97,22 @@ export const BaithiScreen = ({ navigation }) => {
   const NextQuestion = (index) => {
     trigger.current.scrollTo(index - 1);
   };
-  const ghiNhanCautraloi = (index, value) => {
-    if (value != data.cauTraloi[index]) {
-      const copyCautraloi = data.cauTraloi.slice(); //copy the array
-      copyCautraloi[index] = value; //execute the manipulations
-      setData((prevData) => ({ ...prevData, cauTraloi: copyCautraloi })); //set the new state
+
+  const handleFinish = () => {
+    for (let i = 0; i < questionList.length - 1; i++) {
+      triggerAnswer.current[i].current.sendAnswer();
     }
+    setNopbai(true);
+  };
+  const getResult = () => {
+    let result = 0;
+
+    /*for (let i = 0; i < Diemso.length; i++) {
+      if (Diemso[i].result == true) {
+        result++;
+      }
+    }*/
+    return result;
   };
   const TaodanhsachCauhoi = (props) => {
     const [selectedIndex, setSelectedIndex] = React.useState();
@@ -103,23 +124,15 @@ export const BaithiScreen = ({ navigation }) => {
           onSelect={(index) => setSelectedIndex(index)}
           size="medium"
         >
-          <SelectItem
-            title="Phần 1: Từ Câu 1 đến Câu 10"
-            onPress={() => NextQuestion(1)}
-          />
-          <SelectItem
-            title="Phần 2: Từ Câu 11 đến Câu 20"
-            onPress={() => NextQuestion(11)}
-          />
-          <SelectItem
-            title="Phần 3: Từ Câu 21 đến Câu 30"
-            onPress={() => NextQuestion(21)}
-          />
+          <SelectItem title="Câu 1" onPress={() => NextQuestion(1)} />
+          <SelectItem title="Câu 10" onPress={() => NextQuestion(10)} />
+          <SelectItem title="Câu 20" onPress={() => NextQuestion(20)} />
         </Select>
       );
     }
   };
   memo(TaodanhsachCauhoi);
+
   return (
     <View style={styles.container}>
       <View
@@ -146,10 +159,10 @@ export const BaithiScreen = ({ navigation }) => {
           colors={[
             nopBai == false
               ? ["#8c1aff", 1]
-              : [cauDung < 15 ? "#ff1a1a" : "#00ff00", 1],
+              : [getResult() < 15 ? "#ff1a1a" : "#00ff00", 1],
           ]}
           onComplete={() => {
-            setNopbai(true);
+            handleFinish();
             setKey((prevKey) => prevKey + 1);
           }}
         >
@@ -161,7 +174,7 @@ export const BaithiScreen = ({ navigation }) => {
                 </Text>
               );
             else {
-              return <Text>{cauDung}/30</Text>;
+              return <Text>{getResult()}/25</Text>;
             }
           }}
         </CountdownCircleTimer>
@@ -177,11 +190,10 @@ export const BaithiScreen = ({ navigation }) => {
         ></Button>
       </View>
       <TaoBaithi
-        loaiBanglai={"A1"}
         trigger={trigger}
-        data={data}
+        innerRef={triggerAnswer}
+        questionList={questionList}
         nopBai={nopBai}
-        ghiNhanCautraloi={ghiNhanCautraloi}
       />
       <View
         style={{
@@ -192,14 +204,20 @@ export const BaithiScreen = ({ navigation }) => {
         }}
       >
         <View style={{ flex: 1, marginRight: "1%" }}>
-          <Text>{questionList.section1[0].content}</Text>
+          <Text>
+            {Diemso[0].toString()}-/
+            {Diemso[1].toString()}
+          </Text>
           <TaodanhsachCauhoi loaiBanglai={"A1"} />
         </View>
       </View>
     </View>
   );
 };
-/*      <ScrollBottomSheet
+/*                {Diemso[0].answer.toString()}-{Diemso[0].result.toString()}/
+            {Diemso[1].answer.toString()}-{Diemso[1].result.toString()}/
+            {Diemso[2].answer.toString()}-{Diemso[2].result.toString()}
+<ScrollBottomSheet
         componentType="FlatList"
         snapPoints={["35%", "74%"]}
         initialSnapIndex={1}
