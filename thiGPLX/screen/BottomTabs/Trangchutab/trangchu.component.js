@@ -36,7 +36,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-book.png")}
+            source={require("../../../src/image/book.gif")}
             style={styles.ImageIconStyle}
           />
           <Layout>
@@ -54,7 +54,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-fire.png")}
+            source={require("../../../src/image/icons8-fire2.png")}
             style={styles.ImageIconStyle}
           />
 
@@ -69,7 +69,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-traffic.png")}
+            source={require("../../../src/image/scroll.png")}
             style={styles.ImageIconStyle}
           />
 
@@ -84,7 +84,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-truck.png")}
+            source={require("../../../src/image/icons8-truck2.png")}
             style={styles.ImageIconStyle}
           />
 
@@ -99,7 +99,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-public.png")}
+            source={require("../../../src/image/icons8-public1.png")}
             style={styles.ImageIconStyle}
           />
 
@@ -114,7 +114,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-car.png")}
+            source={require("../../../src/image/icons8-car2.png")}
             style={styles.ImageIconStyle}
           />
 
@@ -129,7 +129,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-drill.png")}
+            source={require("../../../src/image/icons8-drill2.png")}
             style={styles.ImageIconStyle}
           />
 
@@ -144,7 +144,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-sign.png")}
+            source={require("../../../src/image/icons8-sign1.png")}
             style={styles.ImageIconStyle}
           />
 
@@ -159,7 +159,7 @@ export const TrangchuScreen = ({ navigation }) => {
           activeOpacity={0.5}
         >
           <Image
-            source={require("../../../src/image/icons8-road.png")}
+            source={require("../../../src/image/icons8-road1.png")}
             style={styles.ImageIconStyle}
           />
 

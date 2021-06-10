@@ -18,8 +18,7 @@ import { Select, SelectItem, Button, SelectGroup } from "@ui-kitten/components";
 import TaoBaithi from "../../../function/taoBaithi.component";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import * as EvaIcon from "../../../src/icon/EvaIcon";
-import { useSelector } from "react-redux";
-import { currentCauhoi } from "../../../redux/cauhoiSlice";
+import { db } from "../../../database/userData";
 
 const timerProps = {
   isPlaying: true,
@@ -48,14 +47,13 @@ const QuestionList = (props) => {
 memo(QuestionList);
 
 export const BaithiScreen = ({ navigation }) => {
-  const Diemso = useSelector(currentCauhoi);
+  const [diem, setDiem] = useState(0);
   const [nopBai, setNopbai] = useState(false);
   const [taoData, setTaodata] = useState(true);
   const trigger = useRef(null);
-  const triggerAnswer = useRef(Array(30).fill(createRef()));
   const [key, setKey] = useState(0);
   const [questionList, setQuestionList] = useState(
-    Array(25).fill({
+    Array(30).fill({
       content: "Loading . . .",
       explanation: "Loading . . .",
       answer: [
@@ -77,13 +75,13 @@ export const BaithiScreen = ({ navigation }) => {
         // console.log(questionList);
       });
   }, [taoData]);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           onPress={() => {
-            handleFinish();
+            setNopbai(true);
+            getData();
           }}
           activeOpacity={0.5}
           style={{ marginRight: 18 }}
@@ -97,24 +95,11 @@ export const BaithiScreen = ({ navigation }) => {
   const NextQuestion = (index) => {
     trigger.current.scrollTo(index - 1);
   };
-
-  const handleFinish = () => {
-    for (let i = 0; i < questionList.length - 1; i++) {
-      triggerAnswer.current[i].current.sendAnswer();
-    }
-    setNopbai(true);
+  const getData = () => {
+    try {
+    } catch (e) {}
   };
-  const getResult = () => {
-    let result = 0;
-
-    /*for (let i = 0; i < Diemso.length; i++) {
-      if (Diemso[i].result == true) {
-        result++;
-      }
-    }*/
-    return result;
-  };
-  const TaodanhsachCauhoi = (props) => {
+  /*const TaodanhsachCauhoi = (props) => {
     const [selectedIndex, setSelectedIndex] = React.useState();
     if (props.loaiBanglai == "A1") {
       return (
@@ -131,7 +116,7 @@ export const BaithiScreen = ({ navigation }) => {
       );
     }
   };
-  memo(TaodanhsachCauhoi);
+  memo(TaodanhsachCauhoi);*/
 
   return (
     <View style={styles.container}>
@@ -144,25 +129,28 @@ export const BaithiScreen = ({ navigation }) => {
       >
         <Button
           accessoryLeft={EvaIcon.ArrowBackIcon}
-          onPress={() => trigger.current.scrollBy(-1)}
+          onPress={() => NextQuestion(1)}
           style={{
-            width: "20%",
+            width: "27%",
             height: "1%",
             borderRadius: 100,
             marginRight: "11%",
           }}
-        ></Button>
+        >
+          <Text>Câu 1</Text>
+        </Button>
         <CountdownCircleTimer
           key={key}
           {...timerProps}
-          duration={600}
+          duration={6000}
           colors={[
             nopBai == false
               ? ["#8c1aff", 1]
-              : [getResult() < 15 ? "#ff1a1a" : "#00ff00", 1],
+              : [diem < 15 ? "#ff1a1a" : "#00ff00", 1],
           ]}
           onComplete={() => {
-            handleFinish();
+            setNopbai(true);
+            getData();
             setKey((prevKey) => prevKey + 1);
           }}
         >
@@ -174,64 +162,54 @@ export const BaithiScreen = ({ navigation }) => {
                 </Text>
               );
             else {
-              return <Text>{getResult()}/25</Text>;
+              return <Text>{diem}/25</Text>;
             }
           }}
         </CountdownCircleTimer>
         <Button
-          accessoryLeft={EvaIcon.ArrowForwardIcon}
-          onPress={() => trigger.current.scrollBy(1)}
+          onPress={() => NextQuestion(25)}
+          accessoryRight={EvaIcon.ArrowForwardIcon}
           style={{
-            width: "20%",
+            width: "27%",
             height: "1%",
             borderRadius: 100,
             marginLeft: "11%",
           }}
-        ></Button>
+        >
+          <Text>Câu {questionList.length - 1}</Text>
+        </Button>
       </View>
       <TaoBaithi
         trigger={trigger}
-        innerRef={triggerAnswer}
         questionList={questionList}
         nopBai={nopBai}
       />
-      <View
+      <Button
+        onPress={() =>
+          db.transaction(
+            (tx) => {
+              tx.executeSql("select * from Answer", [], (_, { rows }) =>
+                console.log(JSON.stringify(rows))
+              );
+            },
+            () => console.log("Error"),
+            () => console.log("success")
+          )
+        }
+        accessoryRight={EvaIcon.ArrowForwardIcon}
         style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "1%",
+          width: "27%",
+          height: "1%",
+          borderRadius: 100,
+          marginLeft: "11%",
         }}
       >
-        <View style={{ flex: 1, marginRight: "1%" }}>
-          <Text>
-            {Diemso[0].toString()}-/
-            {Diemso[1].toString()}
-          </Text>
-          <TaodanhsachCauhoi loaiBanglai={"A1"} />
-        </View>
-      </View>
+        <Text>Nhấp em đi anh</Text>
+      </Button>
     </View>
   );
 };
-/*                {Diemso[0].answer.toString()}-{Diemso[0].result.toString()}/
-            {Diemso[1].answer.toString()}-{Diemso[1].result.toString()}/
-            {Diemso[2].answer.toString()}-{Diemso[2].result.toString()}
-<ScrollBottomSheet
-        componentType="FlatList"
-        snapPoints={["35%", "74%"]}
-        initialSnapIndex={1}
-        renderHandle={() => (
-          <View style={styles.header}>
-            <View style={styles.panelHandle} />
-          </View>
-        )}
-        data={Array.from({ length: 30 }).map((_, i) => String(i))}
-        keyExtractor={(i) => i}
-        renderItem={({ item }) => <QuestionList order={item} />}
-        extraData={jump}
-        contentContainerStyle={styles.contentContainerStyle}
-      />*/
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

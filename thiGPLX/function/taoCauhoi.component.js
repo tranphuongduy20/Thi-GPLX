@@ -1,10 +1,4 @@
-import React, {
-  memo,
-  useEffect,
-  useState,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity, SafeAreaView, View, Image } from "react-native";
 import { Text, Card, Button } from "@ui-kitten/components";
 import { styles } from "../style/styles";
@@ -18,151 +12,8 @@ import Modal, {
   BottomModal,
   ModalPortal,
 } from "react-native-modals";
-import { useSelector, useDispatch } from "react-redux";
-import { ghiNhanCautraloi, currentCauhoi } from "../redux/cauhoiSlice";
+import { cos } from "react-native-reanimated";
 
-const setCautraloi = (index, traLoi) => {
-  return {
-    order: index,
-    answer: traLoi,
-  };
-};
-
-const cauhoiSection = (question) => {
-  if (question != undefined && question.url != undefined) {
-    return (
-      <View>
-        <Image
-          style={{
-            width: question.type == "Biển báo" ? 400 : 350,
-            height: question.type == "Biển báo" ? 150 : 200,
-            alignSelf: "center",
-          }}
-          source={{
-            uri: question.url,
-          }}
-        />
-      </View>
-    );
-  } else return <Text>{question.content}</Text>;
-};
-const chamBai = (hienTai, traLoi, dapAn, nopBai, baiThi) => {
-  if (baiThi == true) {
-    if (hienTai == traLoi && nopBai == false) {
-      return styles.CautraloiOnclick;
-    } else if (
-      (hienTai != traLoi && nopBai == false) ||
-      (hienTai != traLoi && hienTai != dapAn && nopBai == true)
-    ) {
-      return styles.CautraloiUnclick;
-    } else if (hienTai == dapAn && nopBai == true) {
-      return styles.CautraloiDung;
-    } else if (hienTai != dapAn && hienTai == traLoi && nopBai == true) {
-      return styles.CautraloiSai;
-    }
-  }
-};
-const traLoiSection = (answer, index, test, setTest, dapAn, nopBai, baiThi) => {
-  switch (answer.length) {
-    case 2:
-      return (
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("A");
-            }}
-            style={chamBai("A", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>1. {answer[0][0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("B");
-            }}
-            style={chamBai("B", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>2. {answer[1][0]}</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    case 3:
-      return (
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("A");
-            }}
-            style={chamBai("A", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>1. {answer[0][0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false) {
-                setTest("B");
-              }
-            }}
-            style={chamBai("B", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>2. {answer[1][0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("C");
-            }}
-            style={chamBai("C", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>3. {answer[2][0]}</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    case 4:
-      return (
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("A");
-            }}
-            style={chamBai("A", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>1. {answer[0][0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("B");
-            }}
-            style={chamBai("B", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>2. {answer[1][0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("C");
-            }}
-            style={chamBai("C", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>3. {answer[2][0]}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              if ((baiThi == true && nopBai == false) || baiThi == false)
-                setTest("D");
-            }}
-            style={chamBai("D", test, dapAn, nopBai, baiThi)}
-          >
-            <Text>4. {answer[3][0]}</Text>
-          </TouchableOpacity>
-        </View>
-      );
-  }
-};
 const renderItemHeader = (headerProps, index, question) => (
   <SafeAreaView {...headerProps}>
     <Text category="h6">
@@ -186,31 +37,115 @@ const renderItemFooter = (
   nopBai,
   baiThi
 ) => {
-  const SelectedTraloi = useSelector(currentCauhoi);
   const [modal, setModal] = useState(false);
   const showExplain = (nopBai) => {
     if (nopBai == true)
       return <Button onPress={() => setModal(true)}>Giải thích</Button>;
   };
 
+  const saveAnswer = async (answer) => {
+    if (
+      ((baiThi == true && nopBai == false) || baiThi == false) &&
+      test != answer
+    )
+      setTest(answer);
+  };
+
+  const chamBai = (hienTai) => {
+    if (baiThi == true) {
+      if (hienTai == test && nopBai == false) {
+        return styles.CautraloiOnclick;
+      } else if (
+        (hienTai != test && nopBai == false) ||
+        (hienTai != test && hienTai != dapAn && nopBai == true)
+      ) {
+        return styles.CautraloiUnclick;
+      } else if (hienTai == dapAn && nopBai == true) {
+        return styles.CautraloiDung;
+      } else if (hienTai != dapAn && hienTai == test && nopBai == true) {
+        return styles.CautraloiSai;
+      }
+    }
+  };
+  const traLoiSection = () => {
+    switch (question.answer.length) {
+      case 2:
+        return (
+          <View>
+            <TouchableOpacity
+              onPress={() => saveAnswer("A")}
+              style={chamBai("A")}
+            >
+              <Text>1. {question.answer[0][0]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => saveAnswer("B")}
+              style={chamBai("B")}
+            >
+              <Text>2. {question.answer[1][0]}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      case 3:
+        return (
+          <View>
+            <TouchableOpacity
+              onPress={() => saveAnswer("A")}
+              style={chamBai("A")}
+            >
+              <Text>1. {question.answer[0][0]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => saveAnswer("B")}
+              style={chamBai("B")}
+            >
+              <Text>2. {question.answer[1][0]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => saveAnswer("C")}
+              style={chamBai("C")}
+            >
+              <Text>3. {question.answer[2][0]}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      case 4:
+        return (
+          <View>
+            <TouchableOpacity
+              onPress={() => saveAnswer("A")}
+              style={chamBai("A")}
+            >
+              <Text>1. {question.answer[0][0]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => saveAnswer("B")}
+              style={chamBai("B")}
+            >
+              <Text>2. {question.answer[1][0]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => saveAnswer("C")}
+              style={chamBai("C")}
+            >
+              <Text>3. {question.answer[2][0]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => saveAnswer("D")}
+              style={chamBai("D")}
+            >
+              <Text>4. {question.answer[3][0]}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+    }
+  };
   return (
     <View>
-      {question == undefined ? (
-        <Text>Wait . . .</Text>
-      ) : (
-        traLoiSection(
-          question.answer,
-          index,
-          test,
-          setTest,
-          dapAn,
-          nopBai,
-          baiThi
-        )
-      )}
+      {question == undefined ? <Text>Wait . . .</Text> : traLoiSection()}
       {showExplain(nopBai)}
       <Text>
-        Chọn câu: {SelectedTraloi[index - 1]} --- Câu đúng: {dapAn}
+        Chọn câu: {test} --- Câu đúng: {dapAn}
       </Text>
       <Modal
         onTouchOutside={() => {
@@ -256,16 +191,26 @@ const renderItemFooter = (
   );
 };
 
-export const CauhoiForm = forwardRef((props, ref) => {
-  const SelectedTraloi = useSelector(currentCauhoi);
-  const [test, setTest] = useState(SelectedTraloi[props.index - 1]);
-  const dispatch = useDispatch();
-
-  useImperativeHandle(ref, () => ({
-    sendAnswer() {
-      dispatch(ghiNhanCautraloi(setCautraloi(props.index - 1, test)));
-    },
-  }));
+export const CauhoiForm = (props) => {
+  const [test, setTest] = useState("E");
+  const cauhoiSection = () => {
+    if (props.question != undefined && props.question.url != undefined) {
+      return (
+        <View>
+          <Image
+            style={{
+              width: props.question.type == "Biển báo" ? 400 : 350,
+              height: props.question.type == "Biển báo" ? 150 : 200,
+              alignSelf: "center",
+            }}
+            source={{
+              uri: props.question.url,
+            }}
+          />
+        </View>
+      );
+    } else return <Text>{props.question.content}</Text>;
+  };
   return (
     <Card
       status="basic"
@@ -285,7 +230,7 @@ export const CauhoiForm = forwardRef((props, ref) => {
         )
       }
     >
-      {cauhoiSection(props.question)}
+      {cauhoiSection()}
     </Card>
   );
-});
+};
