@@ -11,7 +11,7 @@ function openDatabase() {
     };
   }
 
-  const db = SQLite.openDatabase("userData.db");
+  const db = SQLite.openDatabase("db.db");
   return db;
 }
 

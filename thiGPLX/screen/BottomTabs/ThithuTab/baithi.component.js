@@ -75,6 +75,13 @@ export const BaithiScreen = ({ navigation }) => {
         // console.log(questionList);
       });
   }, [taoData]);
+  useEffect(() => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "create table if not exists items (id integer primary key not null, done int, value text);"
+      );
+    });
+  }, []);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -188,11 +195,14 @@ export const BaithiScreen = ({ navigation }) => {
         onPress={() =>
           db.transaction(
             (tx) => {
-              tx.executeSql("select * from Answer", [], (_, { rows }) =>
+              tx.executeSql("insert into items (done, value) values (0, ?)", [
+                "ok man",
+              ]);
+              tx.executeSql("select * from items", [], (_, { rows }) =>
                 console.log(JSON.stringify(rows))
               );
             },
-            () => console.log("Error"),
+            (e) => console.log("Error: " + e),
             () => console.log("success")
           )
         }

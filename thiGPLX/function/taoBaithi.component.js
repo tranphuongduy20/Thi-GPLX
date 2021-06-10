@@ -5,7 +5,6 @@ import { CauhoiForm } from "./taoCauhoi.component";
 import { styles } from "../style/styles";
 import { Layout } from "@ui-kitten/components";
 import { ScrollView } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function TaoBaithi(props) {
   /*const getData = async (index) => {
