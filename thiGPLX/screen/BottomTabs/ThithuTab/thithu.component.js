@@ -9,39 +9,39 @@ import {
 } from "@ui-kitten/components";
 import Spinner from "react-native-loading-spinner-overlay";
 import { styles } from "../../../style/styles";
+import { db } from "../../../database/userData";
 
 export const ThithuScreen = ({ navigation }) => {
-  const [spinner, setSpinner] = useState(false);
-
   const navigateScreen = (ScreenName) => {
     navigation.navigate(ScreenName);
   };
-  useEffect(() => {
-    const interval1 = setInterval(() => {
-      if (spinner != false) {
-        setSpinner((spinner) => !spinner);
-        navigateScreen("Bài thi");
-      }
-    }, 10);
-    return () => {
-      clearInterval(interval1);
-    };
-  }, [spinner]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation title="Thi thử" alignment="center" />
       <Divider />
       <Layout style={{ flex: 1, alignItems: "center" }}>
-        <Spinner
-          visible={spinner}
-          textContent={"Đang tạo bài thi..."}
-          textStyle={{ color: "#FFF" }}
-        />
         <TouchableOpacity
           onPress={() => {
-            setSpinner((spinner) => true);
-            /*navigateScreen("Bài thi");*/
+            db.transaction(
+              (tx) => {
+                tx.executeSql("DROP TABLE IF EXISTS answers;");
+                tx.executeSql(
+                  "create table if not exists answers (id integer primary key autoincrement, right text, important text);"
+                );
+                tx.executeSql(
+                  "INSERT INTO answers (right,important) VALUES" +
+                    "('false','false'),('false','false'),('false','false'),('false','false'),('false','false')," +
+                    "('false','false'),('false','false'),('false','false'),('false','false'),('false','false')," +
+                    "('false','false'),('false','false'),('false','false'),('false','false'),('false','false')," +
+                    "('false','false'),('false','false'),('false','false'),('false','false'),('false','false')," +
+                    "('false','false'),('false','false'),('false','false'),('false','false'),('false','false')," +
+                    "('false','false'),('false','false'),('false','false'),('false','false'),('false','false');"
+                );
+              },
+              (e) => console.log("Error: " + e)
+            );
+            navigateScreen("Bài thi");
           }}
           style={styles.ButtonTrangchuStyle}
           activeOpacity={0.5}

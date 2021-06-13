@@ -1,9 +1,8 @@
 import React, { memo, useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, Button } from "react-native";
+import { Text, View, TouchableOpacity, Button, Image } from "react-native";
 import Swiper from "react-native-swiper";
 import { CauhoiForm } from "./taoCauhoi.component";
-import { styles } from "../style/styles";
-import { Layout } from "@ui-kitten/components";
+import { DotIndicator } from "react-native-indicators";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function TaoBaithi(props) {
@@ -18,7 +17,9 @@ export default function TaoBaithi(props) {
       console.log("Error while getting Data" + e);
     }
   };*/
-  return (
+  return props.questionList[1].content == "Loading" ? (
+    <DotIndicator color="#8c1aff" />
+  ) : (
     <View style={{ flex: 1 }} removeClippedSubviews={true}>
       <Swiper
         loop={false}
@@ -27,14 +28,19 @@ export default function TaoBaithi(props) {
         scrollEnabled={true}
       >
         {props.questionList.map((currentQuesiton, index) => {
-          if (index != 0 && index < 4) {
+          if (index != 0) {
             return (
               <ScrollView key={index}>
                 <CauhoiForm
                   index={index}
                   question={currentQuesiton}
                   dapAn={props.questionList[0].answer[index - 1]}
-                  nopBai={props.nopBai}
+                  nopBai={
+                    props.nopBai == false ||
+                    (props.nopBai == true && props.state == false)
+                      ? false
+                      : true
+                  }
                   baiThi={true}
                 />
               </ScrollView>

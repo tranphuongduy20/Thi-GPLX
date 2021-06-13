@@ -4,20 +4,11 @@ import React, {
   memo,
   useLayoutEffect,
   useEffect,
-  createRef,
 } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Animated,
-} from "react-native";
-import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
-import { Select, SelectItem, Button, SelectGroup } from "@ui-kitten/components";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import TaoBaithi from "../../../function/taoBaithi.component";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-import * as EvaIcon from "../../../src/icon/EvaIcon";
+import { Dropdown } from "sharingan-rn-modal-dropdown";
 import { db } from "../../../database/userData";
 
 const timerProps = {
@@ -47,15 +38,18 @@ const QuestionList = (props) => {
 memo(QuestionList);
 
 export const BaithiScreen = ({ navigation }) => {
-  const [diem, setDiem] = useState(0);
+  const [diem, setDiem] = useState({ total: 0, state: false });
   const [nopBai, setNopbai] = useState(false);
-  const [taoData, setTaodata] = useState(true);
+  const [arrayAns, setArrayAns] = useState(Array(30).fill("false"));
+  const [IsLiet, setLiet] = useState(true);
   const trigger = useRef(null);
   const [key, setKey] = useState(0);
+
   const [questionList, setQuestionList] = useState(
     Array(30).fill({
-      content: "Loading . . .",
-      explanation: "Loading . . .",
+      content: "Loading",
+      explanation: "Loading",
+      important: false,
       answer: [
         ["", false],
         ["", false],
@@ -70,61 +64,91 @@ export const BaithiScreen = ({ navigation }) => {
         return response.json();
       })
       .then((response) => {
-        //setQuestionList((prevState) => ({ ...prevState, section1: response }));
         setQuestionList(response);
-        // console.log(questionList);
       });
-  }, [taoData]);
-  useEffect(() => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "create table if not exists items (id integer primary key not null, done int, value text);"
-      );
-    });
   }, []);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           onPress={() => {
-            setNopbai(true);
-            getData();
+            if (nopBai != true) {
+              getData();
+              setNopbai(true);
+            }
           }}
           activeOpacity={0.5}
-          style={{ marginRight: 18 }}
+          style={{ marginRight: 20 }}
         >
-          <Text>Nộp bài</Text>
+          <Text>{nopBai != true ? "Nộp bài" : "Kết quả"}</Text>
         </TouchableOpacity>
       ),
     });
   }, [navigation, nopBai]);
-
-  const NextQuestion = (index) => {
-    trigger.current.scrollTo(index - 1);
+  const getData = (part) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "select count(*) from answers where important='true' and right='false'",
+          [],
+          (_, { rows }) => {
+            setLiet(rows.item(0)["count(*)"] != 0 ? true : false);
+          }
+        );
+        tx.executeSql("select * from answers", [], (_, { rows }) => {
+          let array = [];
+          for (let i = 0; i < rows.length; i++) {
+            array.push(rows.item(i)["right"]);
+          }
+          setArrayAns(array);
+        });
+        tx.executeSql(
+          "select count(*) from answers where right='true'",
+          [],
+          (_, { rows }) => {
+            setDiem({ total: rows.item(0)["count(*)"], state: true });
+          }
+        );
+      },
+      (e) => console.log("Error: " + e)
+    );
   };
-  const getData = () => {
-    try {
-    } catch (e) {}
+  const onChangeSS = (value) => {
+    //setValueSS(value);
+    trigger.current.scrollTo(parseInt(value) - 1);
   };
-  /*const TaodanhsachCauhoi = (props) => {
-    const [selectedIndex, setSelectedIndex] = React.useState();
-    if (props.loaiBanglai == "A1") {
-      return (
-        <Select
-          selectedIndex={selectedIndex}
-          placeholder="Chọn câu hỏi"
-          onSelect={(index) => setSelectedIndex(index)}
-          size="medium"
-        >
-          <SelectItem title="Câu 1" onPress={() => NextQuestion(1)} />
-          <SelectItem title="Câu 10" onPress={() => NextQuestion(10)} />
-          <SelectItem title="Câu 20" onPress={() => NextQuestion(20)} />
-        </Select>
-      );
+  const setImage = (index) => {
+    if (nopBai == true) {
+      if (arrayAns[index] == "false") {
+        return "https://i.imgur.com/zYHIHgB.png";
+      } else {
+        return "https://i.imgur.com/btuxRiD.png";
+      }
+    } else {
+      if (questionList[index + 1].important == false) {
+        return "https://i.imgur.com/M2vv9bM.png";
+      } else {
+        return "https://i.imgur.com/EFlOk28.png";
+      }
     }
   };
-  memo(TaodanhsachCauhoi);*/
-
+  const setColor = () => {
+    if (nopBai == true) {
+      if (diem.state == false) return "#ffff1a";
+      else if (diem.total < 21 || IsLiet == true) {
+        return "#ff1a1a";
+      } else return "#00ff00";
+    } else return "#8c1aff";
+  };
+  const data = Array(questionList.length - 1)
+    .fill(null)
+    .map((value, index) => ({
+      value: (index + 1).toString(),
+      label: "Câu " + (index + 1).toString(),
+      avatarSource: {
+        uri: setImage(index),
+      },
+    }));
   return (
     <View style={styles.container}>
       <View
@@ -132,32 +156,32 @@ export const BaithiScreen = ({ navigation }) => {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          marginLeft: "3%",
+          marginRight: "2%",
+          borderWidth: 6,
+          borderColor: "#ccccff",
+          height: 72,
+          borderRadius: 100,
+          borderBottomLeftRadius: 0,
         }}
       >
-        <Button
-          accessoryLeft={EvaIcon.ArrowBackIcon}
-          onPress={() => NextQuestion(1)}
-          style={{
-            width: "27%",
-            height: "1%",
-            borderRadius: 100,
-            marginRight: "11%",
-          }}
-        >
-          <Text>Câu 1</Text>
-        </Button>
+        <Dropdown
+          label="Chọn câu hỏi"
+          data={data}
+          enableAvatar
+          disableSort
+          onChange={onChangeSS}
+        />
         <CountdownCircleTimer
           key={key}
           {...timerProps}
           duration={6000}
-          colors={[
-            nopBai == false
-              ? ["#8c1aff", 1]
-              : [diem < 15 ? "#ff1a1a" : "#00ff00", 1],
-          ]}
+          colors={[[setColor(), 1]]}
           onComplete={() => {
-            setNopbai(true);
-            getData();
+            if (nopBai != true) {
+              setNopbai(true);
+              getData();
+            }
             setKey((prevKey) => prevKey + 1);
           }}
         >
@@ -169,53 +193,24 @@ export const BaithiScreen = ({ navigation }) => {
                 </Text>
               );
             else {
-              return <Text>{diem}/25</Text>;
+              return nopBai == true && diem.state == false ? (
+                <Image
+                  source={require("../../../src/image/loading.gif")}
+                  style={{ width: 39, height: 39 }}
+                />
+              ) : (
+                <Text>{diem.total}/25</Text>
+              );
             }
           }}
         </CountdownCircleTimer>
-        <Button
-          onPress={() => NextQuestion(25)}
-          accessoryRight={EvaIcon.ArrowForwardIcon}
-          style={{
-            width: "27%",
-            height: "1%",
-            borderRadius: 100,
-            marginLeft: "11%",
-          }}
-        >
-          <Text>Câu {questionList.length - 1}</Text>
-        </Button>
       </View>
       <TaoBaithi
         trigger={trigger}
         questionList={questionList}
         nopBai={nopBai}
+        state={diem.state}
       />
-      <Button
-        onPress={() =>
-          db.transaction(
-            (tx) => {
-              tx.executeSql("insert into items (done, value) values (0, ?)", [
-                "ok man",
-              ]);
-              tx.executeSql("select * from items", [], (_, { rows }) =>
-                console.log(JSON.stringify(rows))
-              );
-            },
-            (e) => console.log("Error: " + e),
-            () => console.log("success")
-          )
-        }
-        accessoryRight={EvaIcon.ArrowForwardIcon}
-        style={{
-          width: "27%",
-          height: "1%",
-          borderRadius: 100,
-          marginLeft: "11%",
-        }}
-      >
-        <Text>Nhấp em đi anh</Text>
-      </Button>
     </View>
   );
 };

@@ -12,20 +12,42 @@ import Modal, {
   BottomModal,
   ModalPortal,
 } from "react-native-modals";
-import { cos } from "react-native-reanimated";
 
-const renderItemHeader = (headerProps, index, question) => (
-  <SafeAreaView {...headerProps}>
-    <Text category="h6">
-      Câu hỏi {index}:{" "}
-      {question == undefined
-        ? "Loading . . . "
-        : question.url != undefined
-        ? question.content
-        : ""}
-    </Text>
-  </SafeAreaView>
-);
+import { cos } from "react-native-reanimated";
+import { db } from "../database/userData";
+
+const renderItemHeader = (headerProps, index, question, nopBai) => {
+  const IsImportant = () => {
+    if (question.important == true) {
+      return (
+        <Image
+          source={require("../src/image/flame.gif")}
+          style={{ width: 24, height: 24 }}
+        />
+      );
+    }
+  };
+  const HasImage = () => {
+    if (question == undefined) {
+      return <Text>"Loading . . ."</Text>;
+    } else if (question.url != undefined && question.important != true) {
+      return <Text>{question.content}</Text>;
+    }
+  };
+  return (
+    <SafeAreaView {...headerProps}>
+      <View
+        style={{
+          flexDirection: "row",
+        }}
+      >
+        <Text category="h6">Câu hỏi {index}: </Text>
+        {IsImportant()}
+      </View>
+      {HasImage()}
+    </SafeAreaView>
+  );
+};
 
 const renderItemFooter = (
   footerProps,
@@ -38,17 +60,34 @@ const renderItemFooter = (
   baiThi
 ) => {
   const [modal, setModal] = useState(false);
-  const showExplain = (nopBai) => {
+  const showExplain = () => {
     if (nopBai == true)
       return <Button onPress={() => setModal(true)}>Giải thích</Button>;
   };
-
   const saveAnswer = async (answer) => {
     if (
       ((baiThi == true && nopBai == false) || baiThi == false) &&
       test != answer
     )
       setTest(answer);
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          `update answers set right = ? , important = ? where id = ?;`,
+          [
+            answer == dapAn ? "true" : "false",
+            question.important.toString(),
+            index,
+          ]
+        );
+        /*tx.executeSql(
+          "select * from answers where id=?",
+          [index],
+          (_, { rows }) => console.log(JSON.stringify(rows))
+        );*/
+      },
+      (e) => console.log("Error: " + e)
+    );
   };
 
   const chamBai = (hienTai) => {
@@ -143,10 +182,10 @@ const renderItemFooter = (
   return (
     <View>
       {question == undefined ? <Text>Wait . . .</Text> : traLoiSection()}
-      {showExplain(nopBai)}
       <Text>
         Chọn câu: {test} --- Câu đúng: {dapAn}
       </Text>
+      {showExplain()}
       <Modal
         onTouchOutside={() => {
           setModal(false);
@@ -193,6 +232,7 @@ const renderItemFooter = (
 
 export const CauhoiForm = (props) => {
   const [test, setTest] = useState("E");
+
   const cauhoiSection = () => {
     if (props.question != undefined && props.question.url != undefined) {
       return (
@@ -211,6 +251,7 @@ export const CauhoiForm = (props) => {
       );
     } else return <Text>{props.question.content}</Text>;
   };
+
   return (
     <Card
       status="basic"

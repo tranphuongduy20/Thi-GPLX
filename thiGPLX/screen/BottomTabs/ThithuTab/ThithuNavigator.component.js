@@ -21,7 +21,7 @@ export const ThithuNavigator = () => (
       component={BaithiScreen}
       options={{
         headerTitleAlign: "center",
-        title: "Thời gian",
+        title: "Bài làm",
       }}
     />
   </Navigator>
