@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { TouchableOpacity, SafeAreaView, View, Image } from "react-native";
 import { Text, Card, Button } from "@ui-kitten/components";
 import { styles } from "../style/styles";
 import Modal, {
   ModalTitle,
-  ModalContent,
   ModalFooter,
+  ModalContent,
   ModalButton,
-  SlideAnimation,
   ScaleAnimation,
-  BottomModal,
-  ModalPortal,
 } from "react-native-modals";
 
 import { cos } from "react-native-reanimated";
@@ -57,37 +54,54 @@ const renderItemFooter = (
   setTest,
   dapAn,
   nopBai,
-  baiThi
+  baiThi,
+  chuDe
 ) => {
   const [modal, setModal] = useState(false);
   const showExplain = () => {
-    if (nopBai == true)
-      return <Button onPress={() => setModal(true)}>Giải thích</Button>;
+    if (nopBai == true || baiThi == false)
+      return (
+        <Button
+          onPress={() => setModal(true)}
+          appearance="outline"
+          style={{ width: "88%", alignSelf: "center" }}
+        >
+          Giải thích
+        </Button>
+      );
   };
   const saveAnswer = async (answer) => {
     if (
       ((baiThi == true && nopBai == false) || baiThi == false) &&
       test != answer
-    )
+    ) {
       setTest(answer);
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
-          `update answers set right = ? , important = ? where id = ?;`,
-          [
-            answer == dapAn ? "true" : "false",
-            question.important.toString(),
-            index,
-          ]
+      if (baiThi == true) {
+        db.transaction(
+          (tx) => {
+            tx.executeSql(
+              `update answers set right = ? , important = ? where id = ?;`,
+              [
+                answer == dapAn ? "true" : "false",
+                question.important.toString(),
+                index,
+              ]
+            );
+          },
+          (e) => console.log("Error: " + e)
         );
-        /*tx.executeSql(
-          "select * from answers where id=?",
-          [index],
-          (_, { rows }) => console.log(JSON.stringify(rows))
-        );*/
-      },
-      (e) => console.log("Error: " + e)
-    );
+      } else if (baiThi == false) {
+        db.transaction(
+          (tx) => {
+            tx.executeSql(
+              `update ` + chuDe + ` set answer = ?,right=? where id = ?;`,
+              [answer, answer == dapAn ? "true" : "false", index]
+            );
+          },
+          (e) => console.log("Error: " + e)
+        );
+      }
+    }
   };
 
   const chamBai = (hienTai) => {
@@ -104,6 +118,12 @@ const renderItemFooter = (
       } else if (hienTai != dapAn && hienTai == test && nopBai == true) {
         return styles.CautraloiSai;
       }
+    } else {
+      if (hienTai == dapAn && hienTai == test) {
+        return styles.CautraloiDung;
+      } else if (hienTai != dapAn && hienTai == test) {
+        return styles.CautraloiSai;
+      } else return styles.CautraloiUnclick;
     }
   };
   const traLoiSection = () => {
@@ -209,6 +229,18 @@ const renderItemFooter = (
             key="button-1"
           />,
         ]}
+        footer={
+          <ModalFooter>
+            <ModalButton
+              text="Đóng"
+              bordered
+              onPress={() => {
+                setModal(false);
+              }}
+              key="button"
+            />
+          </ModalFooter>
+        }
       >
         <ModalContent
           style={{
@@ -216,12 +248,7 @@ const renderItemFooter = (
             flexDirection: "row",
           }}
         >
-          <Text
-            style={[
-              styles.TextStyle,
-              { alignSelf: "center", marginLeft: "5%" },
-            ]}
-          >
+          <Text style={{ fontSize: 16, alignSelf: "center", marginLeft: "5%" }}>
             {question == undefined ? "Wait" : question.explanation}
           </Text>
         </ModalContent>
@@ -230,19 +257,35 @@ const renderItemFooter = (
   );
 };
 
-export const CauhoiForm = (props) => {
+export const CauhoiForm = memo((props) => {
   const [test, setTest] = useState("E");
-
+  useEffect(() => {
+    if (props.baiThi == false)
+      db.transaction(
+        (tx) => {
+          tx.executeSql(
+            "select answer from " + props.chuDe + " where id=?",
+            [props.index],
+            (_, { rows }) => {
+              if (test != rows.item(0)["answer"])
+                setTest(rows.item(0)["answer"]);
+            }
+          );
+        },
+        (e) => console.log("Error: " + e)
+      );
+  }, [test]);
   const cauhoiSection = () => {
     if (props.question != undefined && props.question.url != undefined) {
       return (
         <View>
           <Image
             style={{
-              width: props.question.type == "Biển báo" ? 400 : 350,
-              height: props.question.type == "Biển báo" ? 150 : 200,
+              width: 400,
+              height: 200,
               alignSelf: "center",
             }}
+            resizeMode="contain"
             source={{
               uri: props.question.url,
             }}
@@ -267,11 +310,12 @@ export const CauhoiForm = (props) => {
           setTest,
           props.dapAn,
           props.nopBai,
-          props.baiThi
+          props.baiThi,
+          props.chuDe
         )
       }
     >
       {cauhoiSection()}
     </Card>
   );
-};
+});

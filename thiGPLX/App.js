@@ -14,6 +14,7 @@ import { default as theme } from "./src/assets/custom-theme.json";
 
 import store from "./redux/store";
 import { Provider } from "react-redux";
+import { ToastProvider } from "react-native-fast-toast";
 
 import { ModalPortal } from "react-native-modals";
 
@@ -57,17 +58,19 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <SafeAreaView
-        style={{ flex: 1, marginTop: StatusBar.currentHeight }}
-        onLayout={onLayoutRootView}
-      >
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
-          <AppNavigator />
-          <ModalPortal />
-        </ApplicationProvider>
-      </SafeAreaView>
-    </Provider>
+    <ToastProvider>
+      <Provider store={store}>
+        <SafeAreaView
+          style={{ flex: 1, marginTop: StatusBar.currentHeight }}
+          onLayout={onLayoutRootView}
+        >
+          <IconRegistry icons={EvaIconsPack} />
+          <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+            <AppNavigator />
+            <ModalPortal />
+          </ApplicationProvider>
+        </SafeAreaView>
+      </Provider>
+    </ToastProvider>
   );
 }

@@ -10,6 +10,13 @@ import TaoBaithi from "../../../function/taoBaithi.component";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import { Dropdown } from "sharingan-rn-modal-dropdown";
 import { db } from "../../../database/userData";
+import Modal, {
+  ModalTitle,
+  ModalFooter,
+  ModalContent,
+  ModalButton,
+  ScaleAnimation,
+} from "react-native-modals";
 
 const timerProps = {
   isPlaying: true,
@@ -43,20 +50,9 @@ export const BaithiScreen = ({ navigation }) => {
   const [arrayAns, setArrayAns] = useState(Array(30).fill("false"));
   const [IsLiet, setLiet] = useState(true);
   const trigger = useRef(null);
-  const [key, setKey] = useState(0);
-
-  const [questionList, setQuestionList] = useState(
-    Array(30).fill({
-      content: "Loading",
-      explanation: "Loading",
-      important: false,
-      answer: [
-        ["", false],
-        ["", false],
-        ["", false],
-      ],
-    })
-  );
+  const [timeOut, setTimeOut] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [questionList, setQuestionList] = useState([]);
 
   useEffect(() => {
     fetch(url + "/TaoDe")
@@ -73,8 +69,7 @@ export const BaithiScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             if (nopBai != true) {
-              getData();
-              setNopbai(true);
+              setModal(true);
             }
           }}
           activeOpacity={0.5}
@@ -85,6 +80,7 @@ export const BaithiScreen = ({ navigation }) => {
       ),
     });
   }, [navigation, nopBai]);
+
   const getData = (part) => {
     db.transaction(
       (tx) => {
@@ -140,7 +136,7 @@ export const BaithiScreen = ({ navigation }) => {
       } else return "#00ff00";
     } else return "#8c1aff";
   };
-  const data = Array(questionList.length - 1)
+  const data = Array(questionList[0] != null ? questionList.length - 1 : 0)
     .fill(null)
     .map((value, index) => ({
       value: (index + 1).toString(),
@@ -151,66 +147,127 @@ export const BaithiScreen = ({ navigation }) => {
     }));
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          marginLeft: "3%",
-          marginRight: "2%",
-          borderWidth: 6,
-          borderColor: "#ccccff",
-          height: 72,
-          borderRadius: 100,
-          borderBottomLeftRadius: 0,
-        }}
-      >
-        <Dropdown
-          label="Chọn câu hỏi"
-          data={data}
-          enableAvatar
-          disableSort
-          onChange={onChangeSS}
-        />
-        <CountdownCircleTimer
-          key={key}
-          {...timerProps}
-          duration={6000}
-          colors={[[setColor(), 1]]}
-          onComplete={() => {
-            if (nopBai != true) {
-              setNopbai(true);
-              getData();
-            }
-            setKey((prevKey) => prevKey + 1);
+      {questionList[0] != null && (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: "3%",
+            marginRight: "2%",
+            borderWidth: 6,
+            borderColor: "#ccccff",
+            height: 72,
+            borderRadius: 100,
+            borderBottomLeftRadius: 0,
+            backgroundColor: "#ffffff",
           }}
         >
-          {({ remainingTime, animatedColor }) => {
-            if (nopBai == false)
-              return (
-                <Text>
-                  {Math.floor(remainingTime / 60)}:{remainingTime % 60}
-                </Text>
-              );
-            else {
-              return nopBai == true && diem.state == false ? (
-                <Image
-                  source={require("../../../src/image/loading.gif")}
-                  style={{ width: 39, height: 39 }}
-                />
-              ) : (
-                <Text>{diem.total}/25</Text>
-              );
-            }
-          }}
-        </CountdownCircleTimer>
-      </View>
+          <Dropdown
+            label="Chọn câu hỏi"
+            data={data}
+            enableAvatar
+            disableSort
+            onChange={onChangeSS}
+          />
+          <CountdownCircleTimer
+            {...timerProps}
+            duration={1143}
+            colors={[[setColor(), 1]]}
+            onComplete={() => {
+              if (nopBai != true) {
+                setTimeOut(true);
+                setModal(true);
+              }
+              return [true];
+            }}
+          >
+            {({ remainingTime, animatedColor }) => {
+              if (nopBai == false)
+                return (
+                  <Text>
+                    {Math.floor(remainingTime / 60)}:{remainingTime % 60}
+                  </Text>
+                );
+              else {
+                return nopBai == true && diem.state == false ? (
+                  <Image
+                    source={require("../../../src/image/loading.gif")}
+                    style={{ width: 39, height: 39 }}
+                  />
+                ) : (
+                  <Text>{diem.total}/25</Text>
+                );
+              }
+            }}
+          </CountdownCircleTimer>
+        </View>
+      )}
       <TaoBaithi
         trigger={trigger}
         questionList={questionList}
         nopBai={nopBai}
+        baiThi={true}
         state={diem.state}
       />
+      <Modal
+        width={0.9}
+        visible={modal}
+        onSwipeOut={() => setModal(false)}
+        modalAnimation={new ScaleAnimation()}
+        onHardwareBackPress={() => {
+          console.log("onHardwareBackPress");
+          setModal(false);
+          return true;
+        }}
+        modalTitle={<ModalTitle title="Xác nhận" hasTitleBar={false} />}
+        actions={[
+          <ModalButton
+            text="DISMISS"
+            onPress={() => {
+              setModal(false);
+            }}
+            key="button-1"
+          />,
+        ]}
+        footer={
+          <ModalFooter>
+            <ModalButton
+              text="Từ chối"
+              bordered
+              onPress={() => {
+                if (timeOut == true) navigation.goBack();
+                setModal(false);
+              }}
+              key="button-1"
+            />
+
+            <ModalButton
+              text="Đồng ý"
+              bordered
+              onPress={() => {
+                getData();
+                setNopbai(true);
+                setModal(false);
+              }}
+              key="button-2"
+            />
+          </ModalFooter>
+        }
+      >
+        <ModalContent
+          style={{
+            backgroundColor: "#FFF",
+            flexDirection: "column",
+          }}
+        >
+          <Text style={{ fontSize: 16, alignSelf: "center", marginLeft: "5%" }}>
+            {timeOut == false
+              ? "Bạn có đồng ý nộp phần thi của mình ?"
+              : "Hết thời gian xin vui lòng nộp bài !"}
+          </Text>
+        </ModalContent>
+      </Modal>
     </View>
   );
 };

@@ -17,7 +17,12 @@ export default function TaoBaithi(props) {
       console.log("Error while getting Data" + e);
     }
   };*/
-  return props.questionList[1].content == "Loading" ? (
+  let nopBai, baiThi, state;
+  props.nopBai != null ? (nopBai = props.nopBai) : (nopBai = true);
+  props.baiThi != null ? (baiThi = props.baiThi) : (baiThi = false);
+  props.state != null ? (state = props.state) : (state = false);
+
+  return props.questionList[0] == null ? (
     <DotIndicator color="#8c1aff" />
   ) : (
     <View style={{ flex: 1 }} removeClippedSubviews={true}>
@@ -36,12 +41,12 @@ export default function TaoBaithi(props) {
                   question={currentQuesiton}
                   dapAn={props.questionList[0].answer[index - 1]}
                   nopBai={
-                    props.nopBai == false ||
-                    (props.nopBai == true && props.state == false)
+                    nopBai == false || (nopBai == true && state == false)
                       ? false
                       : true
                   }
-                  baiThi={true}
+                  baiThi={baiThi}
+                  chuDe={"None"}
                 />
               </ScrollView>
             );

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const banglaiSlice = createSlice({
-  name: "banglai",
+  name: "license",
   initialState: {
     value: "A1",
   },
@@ -13,5 +13,5 @@ export const banglaiSlice = createSlice({
 });
 
 export const { thaydoiBanglai } = banglaiSlice.actions;
-export const currentBanglai = (state) => state.banglai.value;
+export const currentLicense = (state) => state.license.value;
 export default banglaiSlice.reducer;

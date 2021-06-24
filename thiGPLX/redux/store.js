@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import banglaiReducer from "./banglaiSlice";
-import cauhoiReducer from "./cauhoiSlice";
+import ontapReducer from "./ontapSlice";
 
 export default configureStore({
   reducer: {
-    banglai: banglaiReducer,
-    cauhoi: cauhoiReducer,
+    license: banglaiReducer,
+    part: ontapReducer,
   },
 });
