@@ -28,7 +28,7 @@ const renderItemHeader = (headerProps, index, question, nopBai) => {
     if (question == undefined) {
       return <Text>"Loading . . ."</Text>;
     } else if (question.url != undefined && question.important != true) {
-      return <Text>{question.content}</Text>;
+      return <Text style={styles.meoStyle}>{question.content}</Text>;
     }
   };
   return (
@@ -64,7 +64,7 @@ const renderItemFooter = (
         <Button
           onPress={() => setModal(true)}
           appearance="outline"
-          style={{ width: "88%", alignSelf: "center" }}
+          style={{ width: "100%" }}
         >
           Giải thích
         </Button>
@@ -135,13 +135,13 @@ const renderItemFooter = (
               onPress={() => saveAnswer("A")}
               style={chamBai("A")}
             >
-              <Text>1. {question.answer[0][0]}</Text>
+              <Text style={styles.meoStyle}>1. {question.answer[0][0]}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => saveAnswer("B")}
               style={chamBai("B")}
             >
-              <Text>2. {question.answer[1][0]}</Text>
+              <Text style={styles.meoStyle}>2. {question.answer[1][0]}</Text>
             </TouchableOpacity>
           </View>
         );
@@ -152,19 +152,19 @@ const renderItemFooter = (
               onPress={() => saveAnswer("A")}
               style={chamBai("A")}
             >
-              <Text>1. {question.answer[0][0]}</Text>
+              <Text style={styles.meoStyle}>1. {question.answer[0][0]}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => saveAnswer("B")}
               style={chamBai("B")}
             >
-              <Text>2. {question.answer[1][0]}</Text>
+              <Text style={styles.meoStyle}>2. {question.answer[1][0]}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => saveAnswer("C")}
               style={chamBai("C")}
             >
-              <Text>3. {question.answer[2][0]}</Text>
+              <Text style={styles.meoStyle}>3. {question.answer[2][0]}</Text>
             </TouchableOpacity>
           </View>
         );
@@ -175,25 +175,25 @@ const renderItemFooter = (
               onPress={() => saveAnswer("A")}
               style={chamBai("A")}
             >
-              <Text>1. {question.answer[0][0]}</Text>
+              <Text style={styles.meoStyle}>1. {question.answer[0][0]}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => saveAnswer("B")}
               style={chamBai("B")}
             >
-              <Text>2. {question.answer[1][0]}</Text>
+              <Text style={styles.meoStyle}>2. {question.answer[1][0]}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => saveAnswer("C")}
               style={chamBai("C")}
             >
-              <Text>3. {question.answer[2][0]}</Text>
+              <Text style={styles.meoStyle}>3. {question.answer[2][0]}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => saveAnswer("D")}
               style={chamBai("D")}
             >
-              <Text>4. {question.answer[3][0]}</Text>
+              <Text style={styles.meoStyle}>4. {question.answer[3][0]}</Text>
             </TouchableOpacity>
           </View>
         );
@@ -202,9 +202,9 @@ const renderItemFooter = (
   return (
     <View>
       {question == undefined ? <Text>Wait . . .</Text> : traLoiSection()}
-      <Text>
+      {/*<Text>
         Chọn câu: {test} --- Câu đúng: {dapAn}
-      </Text>
+      </Text>*/}
       {showExplain()}
       <Modal
         onTouchOutside={() => {
@@ -248,7 +248,12 @@ const renderItemFooter = (
             flexDirection: "row",
           }}
         >
-          <Text style={{ fontSize: 16, alignSelf: "center", marginLeft: "5%" }}>
+          <Text
+            style={[
+              styles.meoStyle,
+              { fontSize: 16, alignSelf: "center", marginLeft: "5%" },
+            ]}
+          >
             {question == undefined ? "Wait" : question.explanation}
           </Text>
         </ModalContent>
@@ -292,7 +297,7 @@ export const CauhoiForm = memo((props) => {
           />
         </View>
       );
-    } else return <Text>{props.question.content}</Text>;
+    } else return <Text style={styles.meoStyle}>{props.question.content}</Text>;
   };
 
   return (
