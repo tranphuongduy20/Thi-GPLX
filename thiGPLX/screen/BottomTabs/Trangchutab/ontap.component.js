@@ -13,7 +13,7 @@ import { CauhoiForm } from "../../../function/taoCauhoi.component";
 import { PulseIndicator } from "react-native-indicators";
 import { currentPart } from "../../../redux/ontapSlice";
 import { useSelector } from "react-redux";
-import { findMaxLength } from "../../../database/userData";
+import { findMaxLength } from "../../../function/utilityFunc";
 
 const url = "https://thi-gplx.herokuapp.com/A1";
 
@@ -38,7 +38,19 @@ export const OntapScreen = ({ navigation }) => {
         setQuestionList(response);
       });
   }, []);
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (questionList[0] != null) {
+          // If we don't have unsaved changes, then we don't need to do anything
+          return;
+        }
 
+        // Prevent default behavior of leaving the screen
+        e.preventDefault();
+      }),
+    [navigation, questionList]
+  );
   return questionList[0] == null ? (
     <PulseIndicator color="#8c1aff" size={200} />
   ) : (

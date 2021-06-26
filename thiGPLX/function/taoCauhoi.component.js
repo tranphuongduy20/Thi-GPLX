@@ -1,5 +1,11 @@
 import React, { memo, useEffect, useState } from "react";
-import { TouchableOpacity, SafeAreaView, View, Image } from "react-native";
+import {
+  TouchableOpacity,
+  SafeAreaView,
+  View,
+  Image,
+  Dimensions,
+} from "react-native";
 import { Text, Card, Button } from "@ui-kitten/components";
 import { styles } from "../style/styles";
 import Modal, {
@@ -58,6 +64,9 @@ const renderItemFooter = (
   chuDe
 ) => {
   const [modal, setModal] = useState(false);
+
+  const quesExplain = question.explanation.split(". ");
+
   const showExplain = () => {
     if (nopBai == true || baiThi == false)
       return (
@@ -70,6 +79,7 @@ const renderItemFooter = (
         </Button>
       );
   };
+
   const saveAnswer = async (answer) => {
     if (
       ((baiThi == true && nopBai == false) || baiThi == false) &&
@@ -126,6 +136,7 @@ const renderItemFooter = (
       } else return styles.CautraloiUnclick;
     }
   };
+
   const traLoiSection = () => {
     switch (question.answer.length) {
       case 2:
@@ -245,17 +256,17 @@ const renderItemFooter = (
         <ModalContent
           style={{
             backgroundColor: "#FFF",
-            flexDirection: "row",
+            flexDirection: "column",
           }}
         >
-          <Text
-            style={[
-              styles.meoStyle,
-              { fontSize: 16, alignSelf: "center", marginLeft: "5%" },
-            ]}
-          >
-            {question == undefined ? "Wait" : question.explanation}
-          </Text>
+          {quesExplain.map((explanation, index) => (
+            <Text
+              style={[styles.meoStyle, { fontSize: 16, marginLeft: "5%" }]}
+              key={index}
+            >
+              {explanation}
+            </Text>
+          ))}
         </ModalContent>
       </Modal>
     </View>
@@ -286,8 +297,8 @@ export const CauhoiForm = memo((props) => {
         <View>
           <Image
             style={{
-              width: 400,
-              height: 200,
+              width: Dimensions.get("window").width - 10,
+              height: Dimensions.get("window").height / 3,
               alignSelf: "center",
             }}
             resizeMode="contain"

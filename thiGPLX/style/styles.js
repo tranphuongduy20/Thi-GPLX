@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   TextStyle: {
     marginBottom: 4,
-    marginRight: 20,
+    marginRight: 3,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
     paddingLeft: "7%",
   },
   hintStyle: {
-    width: "94%",
+    width: "93%",
     alignSelf: "center",
     flexDirection: "row",
     alignItems: "center",
@@ -131,8 +131,16 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
   },
   meoStyle: {
-    margin: 5,
+    margin: 2,
     marginLeft: "3%",
     marginRight: "4%",
+    fontSize: 17,
+  },
+  meoContainer: {
+    borderLeftWidth: 5,
+    borderColor: "#ccccff",
+    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 10,
+    marginLeft: "3%",
   },
 });

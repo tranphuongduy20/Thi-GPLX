@@ -101,6 +101,7 @@ export const TurtorialCard = () => (
         style={{
           width: Dimensions.get("window").width,
           height: Dimensions.get("window").width / 2,
+          alignSelf: "center",
         }}
         resizeMode="contain"
         source={{

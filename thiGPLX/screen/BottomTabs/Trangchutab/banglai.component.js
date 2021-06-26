@@ -5,7 +5,9 @@ import { Layout, Text, Button } from "@ui-kitten/components";
 import { thaydoiBanglai, currentLicense } from "../../../redux/banglaiSlice";
 import { styles } from "../../../style/styles";
 import { useToast } from "react-native-fast-toast";
-import { db, stringGenerator } from "../../../database/userData";
+import { db } from "../../../database/userData";
+import { stringGenerator } from "../../../function/utilityFunc";
+
 import Modal, {
   ModalTitle,
   ModalFooter,

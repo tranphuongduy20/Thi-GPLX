@@ -63,6 +63,19 @@ export const BaithiScreen = ({ navigation }) => {
         setQuestionList(response);
       });
   }, []);
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (questionList[0] != null) {
+          // If we don't have unsaved changes, then we don't need to do anything
+          return;
+        }
+
+        // Prevent default behavior of leaving the screen
+        e.preventDefault();
+      }),
+    [navigation, questionList]
+  );
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (

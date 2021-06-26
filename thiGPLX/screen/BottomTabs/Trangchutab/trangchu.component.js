@@ -13,7 +13,8 @@ import { styles } from "../../../style/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { currentLicense } from "../../../redux/banglaiSlice";
 import { chonPhanOnTap } from "../../../redux/ontapSlice";
-import { db, stringGenerator } from "../../../database/userData";
+import { db } from "../../../database/userData";
+import { stringGenerator } from "../../../function/utilityFunc";
 
 export const TrangchuScreen = ({ navigation }) => {
   const navigateScreen = (ScreenName) => {
@@ -21,6 +22,7 @@ export const TrangchuScreen = ({ navigation }) => {
   };
   const Selectedbanglai = useSelector(currentLicense);
   const dispatch = useDispatch();
+
   useEffect(() => {
     db.transaction(
       (tx) => {
@@ -78,6 +80,7 @@ export const TrangchuScreen = ({ navigation }) => {
     );
     console.log("Rerendered !");
   }, []);
+
   const renderRightActions = () => (
     <TopNavigationAction
       icon={EvaIcon.ListIcon}
@@ -106,7 +109,7 @@ export const TrangchuScreen = ({ navigation }) => {
             style={styles.ImageIconStyle}
           />
           <Layout>
-            <Text style={styles.TextStyle}>Ôn tập tất cả các câu hỏi</Text>
+            <Text style={styles.TextStyle}>Ôn tập toàn bộ</Text>
             <ProgressBar progress={1.0} color="#8c1aff" />
             <Text>200/200 câu</Text>
           </Layout>
