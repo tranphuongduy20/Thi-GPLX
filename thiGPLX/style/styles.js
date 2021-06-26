@@ -90,7 +90,8 @@ export const styles = StyleSheet.create({
     fontSize: 20,
   },
   CautraloiOnclick: {
-    borderWidth: 2,
+    borderWidth: 1,
+    backgroundColor: "#f3e6ff",
     borderColor: "#8c1aff",
     paddingTop: 10,
     paddingBottom: 10,
@@ -103,14 +104,16 @@ export const styles = StyleSheet.create({
     paddingLeft: "7%",
   },
   CautraloiDung: {
-    borderWidth: 3,
+    borderWidth: 1,
+    backgroundColor: "#ccffdd",
     borderColor: "#00cc00",
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: "7%",
   },
   CautraloiSai: {
-    borderWidth: 2,
+    borderWidth: 1,
+    backgroundColor: "#ffcccc",
     borderColor: "#ff6666",
     paddingTop: 10,
     paddingBottom: 10,
