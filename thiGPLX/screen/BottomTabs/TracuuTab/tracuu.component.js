@@ -102,7 +102,7 @@ export const TracuuScreen = ({ navigation }) => {
             </Text>
           </Layout>
         </View>
-        <Swiper style={{ borderWidth: 5, borderColor: "red" }}>
+        <Swiper>
           <Layout
             style={{
               flex: 1,
@@ -111,7 +111,7 @@ export const TracuuScreen = ({ navigation }) => {
             <Layout style={styles.meoContainer}>
               <Text
                 category="h5"
-                style={{ color: "red", marginTop: 5, alignSelf: "center" }}
+                style={{ color: "#ff4d4d", marginTop: 5, alignSelf: "center" }}
               >
                 Phần Luật
               </Text>
@@ -155,7 +155,7 @@ export const TracuuScreen = ({ navigation }) => {
             <Layout style={styles.meoContainer}>
               <Text
                 category="h5"
-                style={{ color: "red", marginTop: 5, alignSelf: "center" }}
+                style={{ color: "#ff4d4d", marginTop: 5, alignSelf: "center" }}
               >
                 Phần Luật
               </Text>
@@ -196,7 +196,7 @@ export const TracuuScreen = ({ navigation }) => {
             <Layout style={styles.meoContainer}>
               <Text
                 category="h5"
-                style={{ color: "red", marginTop: 5, alignSelf: "center" }}
+                style={{ color: "#ff4d4d", marginTop: 5, alignSelf: "center" }}
               >
                 Phần Luật
               </Text>
@@ -235,7 +235,7 @@ export const TracuuScreen = ({ navigation }) => {
             <Layout style={styles.meoContainer}>
               <Text
                 category="h5"
-                style={{ color: "red", marginTop: 5, alignSelf: "center" }}
+                style={{ color: "#ff4d4d", marginTop: 5, alignSelf: "center" }}
               >
                 Phần Biển báo
               </Text>
@@ -264,7 +264,7 @@ export const TracuuScreen = ({ navigation }) => {
             <Layout style={styles.meoContainer}>
               <Text
                 category="h5"
-                style={{ color: "red", marginTop: 5, alignSelf: "center" }}
+                style={{ color: "#ff4d4d", marginTop: 5, alignSelf: "center" }}
               >
                 Phần Sa hình
               </Text>
@@ -296,7 +296,7 @@ export const TracuuScreen = ({ navigation }) => {
             <Layout style={styles.meoContainer}>
               <Text
                 category="h5"
-                style={{ color: "red", marginTop: 5, alignSelf: "center" }}
+                style={{ color: "#ff4d4d", marginTop: 5, alignSelf: "center" }}
               >
                 Phần Sa hình
               </Text>

@@ -120,8 +120,8 @@ export const styles = StyleSheet.create({
     paddingLeft: "7%",
   },
   hintStyle: {
-    width: "93%",
-    alignSelf: "center",
+    width: "100%",
+    marginLeft: "4%",
     flexDirection: "row",
     alignItems: "center",
     alignContent: "center",
@@ -129,9 +129,10 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderRightWidth: 0,
     borderColor: "#ccccff",
-    height: 40,
+    height: 42,
     marginTop: "5%",
     borderRadius: 100,
+    borderBottomLeftRadius: 0,
   },
   meoStyle: {
     margin: 2,
@@ -141,9 +142,9 @@ export const styles = StyleSheet.create({
   },
   meoContainer: {
     borderLeftWidth: 5,
+    borderBottomWidth: 5,
     borderColor: "#ccccff",
     borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
-    marginLeft: "3%",
+    marginLeft: "4%",
   },
 });
