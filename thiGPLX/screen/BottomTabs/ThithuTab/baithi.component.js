@@ -185,7 +185,7 @@ export const BaithiScreen = ({ navigation }) => {
           />
           <CountdownCircleTimer
             {...timerProps}
-            duration={1143}
+            duration={1140}
             colors={[[setColor(), 1]]}
             onComplete={() => {
               if (nopBai != true) {
