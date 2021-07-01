@@ -39,15 +39,24 @@ Tất cả các biển báo về giao thông đường bộ
 ### Sa hình
 Hướng dẫn chạy sa hình
 ### Mẹo thi lý thuyết
-## Thư viện sử dụng
-- [Expo](https://github.com/expo/expo)
-- [@expo/webpack-config for UI Kittens](https://github.com/akveo/react-native-ui-kitten/issues/996)
-- [UI Kittens](https://akveo.github.io/react-native-ui-kitten/docs/guides/getting-started#getting-started)
-- [expo-splash-screen](https://docs.expo.io/versions/latest/sdk/splash-screen/)
-- [@react-navigation/bottom-tabs_material-top-tabs_stack](https://reactnavigation.org/)
-- [react-native-swiper](https://github.com/leecade/react-native-swiper)
-- [react-native-progress](https://github.com/react-native-progress-view/progress-bar-android)
-- [react-native-scroll-bottom-sheet](https://github.com/rgommezz/react-native-scroll-bottom-sheet)
-- [react-native-loading-spinner-overlay](https://github.com/joinspontaneous/react-native-loading-spinner-overlay)
-- [react-native-modals](https://github.com/jacklam718/react-native-modals)
-- [react-timer](https://github.com/vydimitrov/react-countdown-circle-timer/tree/master/packages/mobile)
+## Công nghệ và thư viện
+- Công nghệ
+  - Ngôn ngữ: Javascript
+  - Framework Frontend: [React Native](https://github.com/facebook/react-native)
+  - Framework UI: [UI Kittens](https://akveo.github.io/react-native-ui-kitten/docs/guides/getting-started#getting-started)
+  - Backend Platform: [Node.js](https://nodejs.org/en/)
+  - Database: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) và [Expo SQLite](https://docs.expo.io/versions/latest/sdk/sqlite/)
+- Thư viện
+  - [Expo](https://github.com/expo/expo)
+  - [React Navigation](https://reactnavigation.org/)
+  - [react-native-swiper](https://github.com/leecade/react-native-swiper)
+  - [Redux](https://github.com/reduxjs/redux-toolkit)
+  - [react-native-progress](https://github.com/react-native-progress-view/progress-bar-android)
+  - [react-native-modals](https://github.com/jacklam718/react-native-modals)
+  - [react-countdown-circle-timer](https://github.com/vydimitrov/react-countdown-circle-timer/tree/master/packages/mobile)
+  - [react-native-indicators](https://github.com/n4kz/react-native-indicators)
+  - [react-native-fast-toast](https://github.com/arnnis/react-native-fast-toast)
+  - [sharingan-rn-modal-dropdown](https://github.com/srk-sharingan/sharingan-rn-modal-dropdown)
+  - 
+  - [react-native-scroll-bottom-sheet](https://github.com/rgommezz/react-native-scroll-bottom-sheet)
+  - [react-native-loading-spinner-overlay](https://github.com/joinspontaneous/react-native-loading-spinner-overlay)
