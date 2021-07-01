@@ -7,7 +7,6 @@ import {
   TopNavigation,
   Icon,
 } from "@ui-kitten/components";
-import Spinner from "react-native-loading-spinner-overlay";
 import { styles } from "../../../style/styles";
 import { db } from "../../../database/userData";
 
